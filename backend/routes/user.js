@@ -74,10 +74,6 @@ router.put("/update", authMiddleware, async (req, res) => {
 
   const user = await User.findOne({ username });
 
-  console.log(user);
-
-  let hashedPassword = null;
-
   if (req.body.password) {
     //zod validation of password
     const passResponse = passSchema.safeParse(req.body.password);
@@ -94,8 +90,7 @@ router.put("/update", authMiddleware, async (req, res) => {
         .json({ message: "Password should not be same as last password" });
 
     //creating hashed password
-    hashedPassword = await user.createHash(req.body.password);
-    req.body.password = hashedPassword;
+    req.body.password = await user.createHash(req.body.password);
   }
 
   await user.updateOne(req.body);
@@ -133,7 +128,13 @@ router.get("/bulk", authMiddleware, async (req, res) => {
 
   const searchResult = await User.find(query);
 
-  res.status(202).json({ users: searchResult });
+  const users = searchResult.map((user) => ({
+    firstName: user.firstName,
+    lastName: user.lastName,
+    _id: user._id,
+  }));
+
+  res.status(202).json({ users });
 });
 
 module.exports = router;
