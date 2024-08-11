@@ -30,6 +30,18 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
+const AccountSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  balance: {
+    type: Number,
+    required: true,
+  },
+});
+
 // Method to generate a hash from plain text
 UserSchema.methods.createHash = async function (plainTextPassword) {
   // Hashing user's salt and password with 10 iterations,
@@ -48,6 +60,7 @@ UserSchema.methods.validatePassword = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
 
+const Account = mongoose.model("account", AccountSchema);
 const User = mongoose.model("users", UserSchema);
 
 module.exports = {

@@ -99,9 +99,7 @@ router.put("/update", authMiddleware, async (req, res) => {
 });
 
 router.get("/bulk", authMiddleware, async (req, res) => {
-  const { filter } = req.query;
-
-  const searchName = filter;
+  const searchName = req.query.filter || "";
   const nameParts = searchName.split(" ");
 
   let query = {};
