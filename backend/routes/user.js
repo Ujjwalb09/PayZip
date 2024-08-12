@@ -1,7 +1,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../config");
-const { User } = require("../db");
+const { User, Account } = require("../db");
 const router = express.Router();
 const authMiddleware = require("../middlewares/middleware");
 const zod = require("zod");
@@ -32,16 +32,22 @@ router.post("/signup", async (req, res) => {
   const hashedPassword = await newUser.createHash(req.body.password);
   newUser.password = hashedPassword;
 
-  const token =
-    "Bearer " + jwt.sign({ username: req.body.username }, JWT_SECRET);
+  let user = null;
 
   try {
-    await newUser.save();
+    user = await newUser.save();
   } catch (error) {
     return res.status(411).json({
       message: "Email already in use / Incorrect inputs",
     });
   }
+
+  const token = "Bearer " + jwt.sign({ userId: user._id }, JWT_SECRET);
+
+  await Account.create({
+    userId: user._id,
+    balance: 1 + Math.random() * 1000,
+  });
 
   res.json({
     message: "User created successfully",
@@ -64,15 +70,17 @@ router.post("/signin", async (req, res) => {
       message: "Incorrect Password",
     });
 
-  const token = "Bearer " + jwt.sign({ username: user.username }, JWT_SECRET);
+  const token = "Bearer " + jwt.sign({ userId: user._id }, JWT_SECRET);
 
   res.status(200).json({ message: "User Successfully Logged In", token });
 });
 
 router.put("/update", authMiddleware, async (req, res) => {
-  const username = req.username;
+  const userId = req.userId;
 
-  const user = await User.findOne({ username });
+  const user = await User.findById({ _id: userId });
+
+  console.log(user);
 
   if (req.body.password) {
     //zod validation of password
@@ -98,7 +106,7 @@ router.put("/update", authMiddleware, async (req, res) => {
   res.json({ message: "successfully updated" });
 });
 
-router.get("/bulk", authMiddleware, async (req, res) => {
+router.get("/bulk", async (req, res) => {
   const searchName = req.query.filter || "";
   const nameParts = searchName.split(" ");
 
