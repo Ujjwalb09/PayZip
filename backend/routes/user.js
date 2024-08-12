@@ -46,7 +46,7 @@ router.post("/signup", async (req, res) => {
 
   await Account.create({
     userId: user._id,
-    balance: 1 + Math.random() * 1000,
+    balance: Math.floor(1 + Math.random() * 1000),
   });
 
   res.json({
@@ -79,8 +79,6 @@ router.put("/update", authMiddleware, async (req, res) => {
   const userId = req.userId;
 
   const user = await User.findById({ _id: userId });
-
-  console.log(user);
 
   if (req.body.password) {
     //zod validation of password
