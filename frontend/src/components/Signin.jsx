@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Signin = () => {
+  const [visibility, setVisibility] = useState(false);
   return (
     <div className="flex items-center justify-center min-h-screen w-full bg-black">
       <div className="bg-white rounded-lg shadow-md p-6 w-[21%]">
@@ -26,7 +28,7 @@ const Signin = () => {
             />
           </div>
 
-          <div className="mb-6">
+          <div className="mb-6 relative">
             <label
               for="password"
               className="block text-sm font-bold text-gray-700 mb-2"
@@ -34,11 +36,17 @@ const Signin = () => {
               Password
             </label>
             <input
-              type="password"
+              type={visibility === false ? "password" : "text"}
               id="password"
               name="password"
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
+            <i
+              onClick={() => setVisibility(!visibility)}
+              class={`absolute ${
+                visibility === false ? "ri-eye-off-line" : "ri-eye-line"
+              } right-2 top-9 cursor-pointer`}
+            ></i>
           </div>
 
           <button
@@ -51,9 +59,9 @@ const Signin = () => {
 
         <p className="mt-4 text-center text-sm">
           Don't have an account?
-          <a href="#" className="ml-1 underline">
+          <Link to="/signup" className="ml-1 underline">
             Sign Up
-          </a>
+          </Link>
         </p>
       </div>
     </div>

@@ -1,6 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Signup = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [visibility, setVisibility] = useState(false);
+
+  console.log(firstName);
+  console.log(lastName);
+  console.log(email);
+  console.log(password);
+
   return (
     <div className="flex items-center justify-center min-h-screen w-full bg-black">
       <div className="bg-white rounded-lg shadow-md p-6 w-[21%]">
@@ -18,6 +31,9 @@ const Signup = () => {
               First Name
             </label>
             <input
+              onChange={(e) => {
+                setFirstName(e.target.value);
+              }}
               type="text"
               id="firstName"
               name="firstName"
@@ -34,6 +50,9 @@ const Signup = () => {
               Last Name
             </label>
             <input
+              onChange={(e) => {
+                setLastName(e.target.value);
+              }}
               type="text"
               id="lastName"
               name="lastName"
@@ -50,6 +69,9 @@ const Signup = () => {
               Email
             </label>
             <input
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
               type="email"
               id="email"
               name="email"
@@ -58,7 +80,7 @@ const Signup = () => {
             />
           </div>
 
-          <div className="mb-6">
+          <div className="mb-6 relative">
             <label
               for="password"
               className="block text-sm font-bold text-gray-700 mb-2"
@@ -66,11 +88,22 @@ const Signup = () => {
               Password
             </label>
             <input
-              type="password"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              type={visibility === false ? "password" : "text"}
               id="password"
               name="password"
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
+            <i
+              onClick={() => {
+                setVisibility(!visibility);
+              }}
+              className={`${
+                visibility === false ? "ri-eye-off-line" : "ri-eye-line"
+              } absolute right-2 top-9 cursor-pointer`}
+            ></i>
           </div>
 
           <button
@@ -83,9 +116,9 @@ const Signup = () => {
 
         <p className="mt-4 text-center text-sm">
           Already have an account?
-          <a href="#" className="ml-1 underline">
+          <Link to="/signin" className="ml-1 underline">
             Login
-          </a>
+          </Link>
         </p>
       </div>
     </div>
