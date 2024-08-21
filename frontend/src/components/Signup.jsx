@@ -23,16 +23,11 @@ const Signup = () => {
         password,
       })
       .then((response) => {
-        if (response.data.message === "User created successfully") {
-          navigate("/dashboard");
-        }
-
         toast.success(response.data.message);
-        console.log(response.data.message);
+        navigate("/dashboard");
       })
       .catch((error) => {
         toast.error(error.response.data.message);
-        console.log(error.response.data.message);
       });
   };
 

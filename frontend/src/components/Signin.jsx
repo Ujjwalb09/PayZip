@@ -1,8 +1,31 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { userAxios } from "../utils/axios";
 
 const Signin = () => {
   const [visibility, setVisibility] = useState(false);
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const signIn = (event) => {
+    event.preventDefault();
+    userAxios
+      .post("/signin", {
+        username: email,
+        password,
+      })
+      .then((response) => {
+        toast.success(response.data.message);
+        navigate("/dashboard");
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+      });
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen w-full bg-black">
       <div className="bg-white rounded-lg shadow-md p-6 w-[21%]">
@@ -11,7 +34,7 @@ const Signin = () => {
           Enter your credentials to access your account
         </p>
 
-        <form>
+        <form onSubmit={signIn}>
           <div className="mb-4">
             <label
               for="email"
@@ -20,6 +43,8 @@ const Signin = () => {
               Email
             </label>
             <input
+              onChange={(e) => setEmail(e.target.value)}
+              required={true}
               type="email"
               id="email"
               name="email"
@@ -36,6 +61,9 @@ const Signin = () => {
               Password
             </label>
             <input
+              onChange={(e) => setPassword(e.target.value)}
+              required={true}
+              minLength={6}
               type={visibility === false ? "password" : "text"}
               id="password"
               name="password"
