@@ -49,7 +49,7 @@ router.post("/signup", async (req, res) => {
     balance: Math.floor(1 + Math.random() * 1000),
   });
 
-  res.json({
+  res.status(200).json({
     message: "User created successfully",
     token,
   });
