@@ -10,25 +10,24 @@ const Signup = () => {
   const [password, setPassword] = useState("");
 
   const [visibility, setVisibility] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   const navigate = useNavigate();
 
   const signUp = async (event) => {
     event.preventDefault();
-    userAxios
-      .post("/signup", {
+    try {
+      const response = await userAxios.post("/signup", {
         firstName,
         lastName,
         username: email,
         password,
-      })
-      .then((response) => {
-        toast.success(response.data.message);
-        navigate("/dashboard");
-      })
-      .catch((error) => {
-        toast.error(error.response.data.message);
       });
+      toast.success(response.data.message);
+      navigate("/dashboard");
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
   };
 
   return (
@@ -42,17 +41,15 @@ const Signup = () => {
         <form onSubmit={signUp}>
           <div className="mb-4">
             <label
-              for="firstName"
+              htmlFor="firstName"
               className="block text-sm font-bold text-gray-700 mb-2"
             >
               First Name
             </label>
             <input
-              onChange={(e) => {
-                setFirstName(e.target.value);
-              }}
+              onChange={(e) => setFirstName(e.target.value)}
               type="text"
-              required={true}
+              required
               id="firstName"
               name="firstName"
               placeholder="John"
@@ -62,17 +59,15 @@ const Signup = () => {
 
           <div className="mb-4">
             <label
-              for="lastName"
+              htmlFor="lastName"
               className="block text-sm font-bold text-gray-700 mb-2"
             >
               Last Name
             </label>
             <input
-              onChange={(e) => {
-                setLastName(e.target.value);
-              }}
+              onChange={(e) => setLastName(e.target.value)}
               type="text"
-              required={true}
+              required
               id="lastName"
               name="lastName"
               placeholder="Doe"
@@ -82,19 +77,17 @@ const Signup = () => {
 
           <div className="mb-4">
             <label
-              for="email"
+              htmlFor="email"
               className="block text-sm font-bold text-gray-700 mb-2"
             >
               Email
             </label>
             <input
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
+              onChange={(e) => setEmail(e.target.value)}
               type="email"
               id="email"
               name="email"
-              required={true}
+              required
               placeholder="johndoe@example.com"
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
@@ -102,29 +95,33 @@ const Signup = () => {
 
           <div className="mb-6 relative">
             <label
-              for="password"
+              htmlFor="password"
               className="block text-sm font-bold text-gray-700 mb-2"
             >
               Password
             </label>
             <input
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-              type={visibility === false ? "password" : "text"}
+              onChange={(e) => setPassword(e.target.value)}
+              type={visibility ? "text" : "password"}
               id="password"
               name="password"
-              required={true}
+              required
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
             <i
-              onClick={() => {
-                setVisibility(!visibility);
-              }}
+              onClick={() => setVisibility(!visibility)}
+              onMouseEnter={() => setShowTooltip(true)}
+              onMouseLeave={() => setShowTooltip(false)}
               className={`${
-                visibility === false ? "ri-eye-off-line" : "ri-eye-line"
+                visibility ? "ri-eye-line" : "ri-eye-off-line"
               } absolute right-2 top-9 cursor-pointer`}
-            ></i>
+            >
+              {showTooltip && (
+                <span className="absolute right-0 top-0 transform -translate-y-full bg-gray-800 text-white text-xs rounded-md py-1 px-2 whitespace-nowrap">
+                  {visibility ? "Hide Password" : "Show Password"}
+                </span>
+              )}
+            </i>
           </div>
 
           <button

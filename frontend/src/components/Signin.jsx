@@ -9,6 +9,7 @@ const Signin = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showToolTip, setShowTooltip] = useState(false);
 
   const signIn = (event) => {
     event.preventDefault();
@@ -55,26 +56,33 @@ const Signin = () => {
 
           <div className="mb-6 relative">
             <label
-              for="password"
+              htmlFor="password"
               className="block text-sm font-bold text-gray-700 mb-2"
             >
               Password
             </label>
             <input
               onChange={(e) => setPassword(e.target.value)}
-              required={true}
-              minLength={6}
-              type={visibility === false ? "password" : "text"}
+              type={visibility ? "text" : "password"}
               id="password"
               name="password"
+              required
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
             <i
               onClick={() => setVisibility(!visibility)}
-              class={`absolute ${
-                visibility === false ? "ri-eye-off-line" : "ri-eye-line"
-              } right-2 top-9 cursor-pointer`}
-            ></i>
+              onMouseEnter={() => setShowTooltip(true)}
+              onMouseLeave={() => setShowTooltip(false)}
+              className={`${
+                visibility ? "ri-eye-line" : "ri-eye-off-line"
+              } absolute right-2 top-9 cursor-pointer`}
+            >
+              {showToolTip && (
+                <span className="absolute right-0 top-0 transform -translate-y-full bg-gray-800 text-white text-xs rounded-md py-1 px-2 whitespace-nowrap">
+                  {visibility ? "Hide Password" : "Show Password"}
+                </span>
+              )}
+            </i>
           </div>
 
           <button
