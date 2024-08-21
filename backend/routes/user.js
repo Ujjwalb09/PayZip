@@ -15,11 +15,11 @@ router.post("/signup", async (req, res) => {
   const passResponse = passSchema.safeParse(req.body.password);
 
   if (!usernameResponse.success)
-    return res.json({
+    return res.status(411).json({
       message: "Invalid Email",
     });
   else if (!passResponse.success)
-    return res.json({
+    return res.status(411).json({
       message: "Password should be of 6 or more characters",
     });
 
