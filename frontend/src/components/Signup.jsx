@@ -9,10 +9,7 @@ const Signup = () => {
 
   const [visibility, setVisibility] = useState(false);
 
-  console.log(firstName);
-  console.log(lastName);
-  console.log(email);
-  console.log(password);
+  const signUp = () => {};
 
   return (
     <div className="flex items-center justify-center min-h-screen w-full bg-black">
@@ -22,7 +19,7 @@ const Signup = () => {
           Enter your information to create an account
         </p>
 
-        <form>
+        <form onSubmit={signUp}>
           <div className="mb-4">
             <label
               for="firstName"
