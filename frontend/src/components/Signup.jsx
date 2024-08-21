@@ -31,6 +31,7 @@ const Signup = () => {
         console.log(response.data.message);
       })
       .catch((error) => {
+        toast.error(error.response.data.message);
         console.log(error.response.data.message);
       });
   };
@@ -56,6 +57,7 @@ const Signup = () => {
                 setFirstName(e.target.value);
               }}
               type="text"
+              required={true}
               id="firstName"
               name="firstName"
               placeholder="John"
@@ -75,6 +77,7 @@ const Signup = () => {
                 setLastName(e.target.value);
               }}
               type="text"
+              required={true}
               id="lastName"
               name="lastName"
               placeholder="Doe"
@@ -96,6 +99,7 @@ const Signup = () => {
               type="email"
               id="email"
               name="email"
+              required={true}
               placeholder="johndoe@example.com"
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
@@ -115,6 +119,7 @@ const Signup = () => {
               type={visibility === false ? "password" : "text"}
               id="password"
               name="password"
+              required={true}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
             <i
