@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { userAxios } from "../utils/axios";
+import { toast } from "react-toastify";
 
 const Signup = () => {
   const [firstName, setFirstName] = useState("");
@@ -9,7 +11,29 @@ const Signup = () => {
 
   const [visibility, setVisibility] = useState(false);
 
-  const signUp = () => {};
+  const navigate = useNavigate();
+
+  const signUp = async (event) => {
+    event.preventDefault();
+    userAxios
+      .post("/signup", {
+        firstName,
+        lastName,
+        username: email,
+        password,
+      })
+      .then((response) => {
+        if (response.data.message === "User created successfully") {
+          navigate("/dashboard");
+        }
+
+        toast.success(response.data.message);
+        console.log(response.data.message);
+      })
+      .catch((error) => {
+        console.log(error.response.data.message);
+      });
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen w-full bg-black">

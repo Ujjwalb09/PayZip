@@ -6,7 +6,7 @@ import SendMoney from "./components/SendMoney";
 
 function App() {
   return (
-    <div classNameName="w-screen h-screen flex">
+    <div className="w-screen h-screen flex">
       <Routes>
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
