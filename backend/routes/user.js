@@ -21,7 +21,7 @@ router.post("/signup", async (req, res) => {
   if (response.length === 0 || otp !== response[0].otp) {
     return res.status(400).json({
       success: false,
-      message: "❌ Invalid OTP",
+      message: "Invalid OTP",
     });
   }
 

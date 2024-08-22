@@ -9,12 +9,27 @@ function OtpInputWithValidation({ numberOfDigits = 6 }) {
   const otpBoxReference = useRef([]);
   const navigate = useNavigate();
   const [loading, setLoading] = useState();
+  const [timeLeft, setTimeLeft] = useState(180);
 
   const userDetailObj = useOutletContext();
 
   useEffect(() => {
     if (!userDetailObj.email) navigate("/signup");
   }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+  };
 
   function handleChange(value, index) {
     let newArr = [...otp];
@@ -61,6 +76,8 @@ function OtpInputWithValidation({ numberOfDigits = 6 }) {
     setLoading(false);
   };
 
+  const resendOTP = () => {};
+
   return (
     <form onSubmit={signUp}>
       <div className="bg-[rgba(0,0,0,.8)] absolute z-[100] top-0 left-0 w-screen h-screen flex flex-col items-center justify-center">
@@ -93,28 +110,60 @@ function OtpInputWithValidation({ numberOfDigits = 6 }) {
             />
           ))}
         </div>
-        <p
-          className={`text-lg text-white mt-4 ${otpError ? "error-show" : ""}`}
-        >
-          {otpError}
+        <p className={`text-lg text-white mx-auto mt-4`}>
+          {otpError ? otpError : ""}
         </p>
-        <button
-          type="submit"
-          className="bg-black text-white py-3 px-5 rounded-lg hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:scale-105 mt-2"
-        >
-          {loading ? (
-            <img
-              className="w-full h-6 animate-spin ease-linear"
-              src="../assets/loading.svg"
-              alt="Loading icon"
-            ></img>
-          ) : (
-            "Verify"
-          )}
-        </button>
+        <div className="flex gap-5">
+          <button
+            type="submit"
+            disabled={timeLeft <= 0}
+            className={`bg-black text-white py-3 px-5 rounded-lg  mt-2 ${
+              timeLeft <= 0
+                ? "cursor-not-allowed opacity-50"
+                : "hover:bg-gray-900 hover:scale-105"
+            }`}
+          >
+            {loading ? (
+              <img
+                className="w-full h-6 animate-spin ease-linear"
+                src="../assets/loading.svg"
+                alt="Loading icon"
+              ></img>
+            ) : (
+              "Verify"
+            )}
+          </button>
+          <button
+            type="button"
+            onClick={resendOTP}
+            disabled={timeLeft > 0} // Disable button when timer is running
+            className={`bg-black text-white py-3 px-5 rounded-lg mt-2 ${
+              timeLeft > 0
+                ? "cursor-not-allowed opacity-50"
+                : "hover:bg-gray-900 hover:scale-105"
+            }`}
+          >
+            {loading ? (
+              <img
+                className="w-full h-6 animate-spin ease-linear"
+                src="../assets/loading.svg"
+                alt="Loading icon"
+              />
+            ) : timeLeft > 0 ? (
+              <>
+                Resend OTP in{" "}
+                <span className="text-white">{formatTime(timeLeft)}</span>{" "}
+              </>
+            ) : (
+              <>Resend OTP</>
+            )}
+          </button>
+        </div>
       </div>
     </form>
   );
 }
 
 export default OtpInputWithValidation;
+
+//  <span className="text-white">{formatTime(timeLeft)}</span>
