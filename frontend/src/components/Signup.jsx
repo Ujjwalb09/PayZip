@@ -47,6 +47,7 @@ const Signup = () => {
       navigate("/signup/send-otp");
     } catch (error) {
       toast.error(error.response.data.message);
+      navigate(-1);
     }
     setLoading(false);
   };

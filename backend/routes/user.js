@@ -11,14 +11,9 @@ const passSchema = zod.string().min(6);
 //user Signup
 router.post("/signup", async (req, res) => {
   //zod validations
-  const usernameResponse = emailSchema.safeParse(req.body.username);
   const passResponse = passSchema.safeParse(req.body.password);
 
-  if (!usernameResponse.success)
-    return res.status(411).json({
-      message: "Invalid Email",
-    });
-  else if (!passResponse.success)
+  if (!passResponse.success)
     return res.status(411).json({
       message: "Password should be of 6 or more characters",
     });

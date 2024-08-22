@@ -10,9 +10,11 @@ const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showToolTip, setShowTooltip] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const signIn = (event) => {
     event.preventDefault();
+    setLoading(true);
     userAxios
       .post("/signin", {
         username: email,
@@ -21,6 +23,7 @@ const Signin = () => {
       .then((response) => {
         toast.success(response.data.message);
         navigate("/dashboard");
+        setLoading(false);
       })
       .catch((error) => {
         toast.error(error.response.data.message);
@@ -89,7 +92,15 @@ const Signin = () => {
             type="submit"
             className="w-full bg-black text-white py-2 px-4 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
           >
-            Sign In
+            {loading ? (
+              <img
+                className="w-full h-6 animate-spin ease-linear"
+                src="../assets/loading.svg"
+                alt="Loading icon"
+              ></img>
+            ) : (
+              "Sign In"
+            )}
           </button>
         </form>
 

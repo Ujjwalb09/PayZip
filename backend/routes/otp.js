@@ -2,8 +2,18 @@ const express = require("express");
 const router = express.Router();
 const { User, OTP } = require("../db");
 const otpGenerator = require("otp-generator");
+const zod = require("zod");
+const emailSchema = zod.string().email();
 
 router.post("/send-otp", async (req, res) => {
+  //zod validation for username
+  const usernameResponse = emailSchema.safeParse(req.body.username);
+
+  if (!usernameResponse.success)
+    return res.status(411).json({
+      message: "Invalid Email",
+    });
+
   try {
     const email = req.body.username;
     // Check if user is already present
@@ -30,11 +40,10 @@ router.post("/send-otp", async (req, res) => {
       result = await OTP.findOne({ otp: otp });
     }
     const otpPayload = { email, otp };
-    const otpBody = await OTP.create(otpPayload);
+    await OTP.create(otpPayload);
     res.status(200).json({
       success: true,
       message: "OTP sent successfully",
-      otp,
     });
   } catch (error) {
     console.log(error.message);
