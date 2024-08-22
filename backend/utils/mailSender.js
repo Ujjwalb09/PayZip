@@ -5,12 +5,12 @@ const mailSender = async (email, title, body) => {
     // Create a Transporter to send emails
 
     var smtpConfig = {
-      host: "smtp.gmail.com",
+      host: process.env.MAIL_HOST,
       port: 465,
       secure: true, // use SSL for port 465
       auth: {
-        user: "ujjwalbhatt09@gmail.com",
-        pass: "yvdmivkhvyzkrxog",
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS,
       },
       tls: {
         rejectUnauthorized: false,
@@ -26,7 +26,6 @@ const mailSender = async (email, title, body) => {
       subject: title,
       html: body,
     });
-    console.log(" Line 22 Email info: ", info);
     return info;
   } catch (error) {
     console.log("Error" + error.message);
