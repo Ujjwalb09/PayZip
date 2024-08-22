@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { userAxios } from "../utils/axios";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const Signup = () => {
   const [firstName, setFirstName] = useState("");
@@ -11,6 +12,8 @@ const Signup = () => {
 
   const [visibility, setVisibility] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -30,6 +33,24 @@ const Signup = () => {
   //   }
   // };
 
+  const sendOtp = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/otp/send-otp",
+        {
+          username: email,
+        }
+      );
+      toast.success(response.data.message);
+      navigate("/signup/send-otp");
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+    setLoading(false);
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen w-full bg-black">
       <div className="bg-white rounded-lg shadow-md p-6 w-[21%]">
@@ -38,13 +59,7 @@ const Signup = () => {
           Enter your information to create an account
         </p>
 
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            navigate("/signup/send-otp");
-            console.log("jello");
-          }}
-        >
+        <form onSubmit={sendOtp}>
           <div className="mb-4">
             <label
               htmlFor="firstName"
@@ -134,7 +149,15 @@ const Signup = () => {
             type="submit"
             className="w-full bg-black text-white py-2 px-4 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
           >
-            Sign Up
+            {loading ? (
+              <img
+                className="w-full h-6 animate-spin ease-linear"
+                src="../assets/loading.svg"
+                alt="Loading icon"
+              ></img>
+            ) : (
+              "Sign Up"
+            )}
           </button>
         </form>
 
@@ -151,3 +174,20 @@ const Signup = () => {
 };
 
 export default Signup;
+
+{
+  /* <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M20.0001 12C20.0001 13.3811 19.6425 14.7386 18.9623 15.9405C18.282 17.1424 17.3022 18.1477 16.1182 18.8587C14.9341 19.5696 13.5862 19.9619 12.2056 19.9974C10.825 20.0328 9.45873 19.7103 8.23975 19.0612" stroke="#ffffff" stroke-width="3.55556" stroke-linecap="round"></path> </g></svg> */
+}
+
+{
+  /* <button
+  type="submit"
+  class="box-border text-white text-[16px] font-normal tracking-[normal] leading-[24px] bg-black cursor-pointer w-[331.279px] outline-offset-0 px-[16px] py-[8px] rounded-[6px]"
+>
+  Sign Up
+</button>
+
+<style>
+
+</style> */
+}
