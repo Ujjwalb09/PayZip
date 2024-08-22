@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const mailSender = require("./utils/mailSender");
 
 mongoose.connect(
   "mongodb+srv://ujjwalbhatt09:Bhatt_2021@cluster0.e1a378i.mongodb.net/payments_app"
@@ -60,10 +61,51 @@ UserSchema.methods.validatePassword = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
 
+const otpSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: true,
+  },
+  otp: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    expires: 60 * 5, // The document will be automatically deleted after 5 minutes of its creation time
+  },
+});
+
+async function sendVerificationEmail(email, otp) {
+  try {
+    const mailResponse = await mailSender(
+      email,
+      "Verification Email",
+      `<h1>Please confirm your OTP</h1>
+       <p>Here is your OTP code: ${otp}</p>`
+    );
+    console.log("Email sent successfully: ", mailResponse);
+  } catch (error) {
+    console.log("Error occurred while sending email: ", error);
+    throw error;
+  }
+}
+otpSchema.pre("save", async function (next) {
+  console.log("New document saved to the database");
+  // Only send an email when a new document is created
+  if (this.isNew) {
+    await sendVerificationEmail(this.email, this.otp);
+  }
+  next();
+});
+
 const Account = mongoose.model("account", AccountSchema);
 const User = mongoose.model("users", UserSchema);
+const OTP = mongoose.model("OTP", otpSchema);
 
 module.exports = {
   User,
   Account,
+  OTP,
 };

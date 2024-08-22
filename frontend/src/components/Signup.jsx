@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { userAxios } from "../utils/axios";
 import { toast } from "react-toastify";
 
@@ -14,21 +14,21 @@ const Signup = () => {
 
   const navigate = useNavigate();
 
-  const signUp = async (event) => {
-    event.preventDefault();
-    try {
-      const response = await userAxios.post("/signup", {
-        firstName,
-        lastName,
-        username: email,
-        password,
-      });
-      toast.success(response.data.message);
-      navigate("/dashboard");
-    } catch (error) {
-      toast.error(error.response.data.message);
-    }
-  };
+  // const signUp = async (event) => {
+  //   event.preventDefault();
+  //   try {
+  //     const response = await userAxios.post("/signup", {
+  //       firstName,
+  //       lastName,
+  //       username: email,
+  //       password,
+  //     });
+  //     toast.success(response.data.message);
+  //     navigate("/dashboard");
+  //   } catch (error) {
+  //     toast.error(error.response.data.message);
+  //   }
+  // };
 
   return (
     <div className="flex items-center justify-center min-h-screen w-full bg-black">
@@ -38,7 +38,13 @@ const Signup = () => {
           Enter your information to create an account
         </p>
 
-        <form onSubmit={signUp}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            navigate("/signup/send-otp");
+            console.log("jello");
+          }}
+        >
           <div className="mb-4">
             <label
               htmlFor="firstName"
@@ -113,11 +119,11 @@ const Signup = () => {
               onMouseEnter={() => setShowTooltip(true)}
               onMouseLeave={() => setShowTooltip(false)}
               className={`${
-                visibility ? "ri-eye-line" : "ri-eye-off-line"
+                visibility ? "ri-eye-line" : "ri-eye-close-line"
               } absolute right-2 top-9 cursor-pointer`}
             >
               {showTooltip && (
-                <span className="absolute right-0 top-0 transform -translate-y-full bg-gray-800 text-white text-xs rounded-md py-1 px-2 whitespace-nowrap">
+                <span className="absolute right-0 top-0 transform -translate-y-full bg-gray-800 text-white text-xs rounded-md py-1 px-2 whitespace-nowrap transition duration-1000 delay-1000 ease-in-out">
                   {visibility ? "Hide Password" : "Show Password"}
                 </span>
               )}
@@ -139,6 +145,7 @@ const Signup = () => {
           </Link>
         </p>
       </div>
+      <Outlet />
     </div>
   );
 };
