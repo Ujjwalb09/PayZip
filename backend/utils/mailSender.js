@@ -21,7 +21,7 @@ const mailSender = async (email, title, body) => {
 
     // Send emails to users
     let info = await transporter.sendMail({
-      from: "www.sandeepdev.me - Sandeep Singh",
+      from: "Payments App",
       to: email,
       subject: title,
       html: body,

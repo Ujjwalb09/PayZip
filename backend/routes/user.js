@@ -1,22 +1,29 @@
 const express = require("express");
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../config");
 const { User, Account } = require("../db");
 const router = express.Router();
 const authMiddleware = require("../middlewares/middleware");
 const zod = require("zod");
-const emailSchema = zod.string().email();
 const passSchema = zod.string().min(6);
+const { OTP } = require("../db");
 
 //user Signup
 router.post("/signup", async (req, res) => {
   //zod validations
-  const passResponse = passSchema.safeParse(req.body.password);
 
-  if (!passResponse.success)
-    return res.status(411).json({
-      message: "Password should be of 6 or more characters",
+  const otp = req.body.otp;
+
+  const response = await OTP.find({ email: req.body.username })
+    .sort({ createdAt: -1 })
+    .limit(1);
+  if (response.length === 0 || otp !== response[0].otp) {
+    return res.status(400).json({
+      success: false,
+      message: "❌ Invalid OTP",
     });
+  }
 
   const newUser = new User({
     username: req.body.username,

@@ -4,6 +4,7 @@ const { User, OTP } = require("../db");
 const otpGenerator = require("otp-generator");
 const zod = require("zod");
 const emailSchema = zod.string().email();
+const passSchema = zod.string().min(6);
 
 router.post("/send-otp", async (req, res) => {
   //zod validation for username
@@ -12,6 +13,14 @@ router.post("/send-otp", async (req, res) => {
   if (!usernameResponse.success)
     return res.status(411).json({
       message: "Invalid Email",
+    });
+
+  //zod validation for password
+  const passResponse = passSchema.safeParse(req.body.password);
+
+  if (!passResponse.success)
+    return res.status(411).json({
+      message: "Password should be of 6 or more characters",
     });
 
   try {
