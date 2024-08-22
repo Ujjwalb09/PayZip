@@ -3,8 +3,6 @@ import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { toast } from "react-toastify";
 import { userAxios } from "../utils/axios";
 
-const correctOTP = "123456"; // validate from your server
-
 function OtpInputWithValidation({ numberOfDigits = 6 }) {
   const [otp, setOtp] = useState(new Array(numberOfDigits).fill(""));
   const [otpError, setOtpError] = useState(null);
@@ -13,6 +11,10 @@ function OtpInputWithValidation({ numberOfDigits = 6 }) {
   const [loading, setLoading] = useState();
 
   const userDetailObj = useOutletContext();
+
+  useEffect(() => {
+    if (!userDetailObj.email) navigate("/signup");
+  }, []);
 
   function handleChange(value, index) {
     let newArr = [...otp];
@@ -32,17 +34,6 @@ function OtpInputWithValidation({ numberOfDigits = 6 }) {
       otpBoxReference.current[index + 1].focus();
     }
   }
-
-  // useEffect(() => {
-  //   if (otp.join("") !== "" && otp.join("") !== correctOTP) {
-  //     setOtpError("❌ Wrong OTP Please Check Again");
-  //   } else if (otp.join("") === "") {
-  //     setOtpError(null);
-  //   } else {
-  //     setOtpError(null);
-  //     navigate("/dashboard");
-  //   }
-  // }, [otp]);
 
   const signUp = async (e) => {
     e.preventDefault();
