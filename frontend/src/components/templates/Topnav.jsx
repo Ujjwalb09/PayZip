@@ -9,9 +9,9 @@ const Topnav = () => {
       </div>
       <div className="flex gap-4 px-4 text-center">
         <div className="flex items-center">Hello</div>
-        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gray-200 text-xl font-medium text-gray-700">
+        <button className="flex items-center justify-center w-12 h-12 rounded-full bg-gray-200 text-xl font-medium text-gray-700">
           U
-        </div>
+        </button>
       </div>
     </div>
   );
