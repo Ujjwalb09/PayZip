@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { toast } from "react-toastify";
 import { userAxios } from "../utils/axios";
+import axios from "axios";
 
 function OtpInputWithValidation({ numberOfDigits = 6 }) {
   const [otp, setOtp] = useState(new Array(numberOfDigits).fill(""));
@@ -9,7 +10,7 @@ function OtpInputWithValidation({ numberOfDigits = 6 }) {
   const otpBoxReference = useRef([]);
   const navigate = useNavigate();
   const [loading, setLoading] = useState();
-  const [timeLeft, setTimeLeft] = useState(180);
+  const [timeLeft, setTimeLeft] = useState(120);
 
   const userDetailObj = useOutletContext();
 
@@ -76,7 +77,23 @@ function OtpInputWithValidation({ numberOfDigits = 6 }) {
     setLoading(false);
   };
 
-  const resendOTP = () => {};
+  const resendOTP = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/otp/send-otp",
+        {
+          username: userDetailObj.email,
+          password: userDetailObj.password,
+        }
+      );
+      toast.success(response.data.message);
+      setTimeLeft(120);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
+  };
 
   return (
     <form onSubmit={signUp}>
@@ -123,7 +140,7 @@ function OtpInputWithValidation({ numberOfDigits = 6 }) {
                 : "hover:bg-gray-900 hover:scale-105"
             }`}
           >
-            {loading ? (
+            {loading && timeLeft > 0 ? (
               <img
                 className="w-full h-6 animate-spin ease-linear"
                 src="../assets/loading.svg"
@@ -143,7 +160,7 @@ function OtpInputWithValidation({ numberOfDigits = 6 }) {
                 : "hover:bg-gray-900 hover:scale-105"
             }`}
           >
-            {loading ? (
+            {loading && timeLeft <= 0 ? (
               <img
                 className="w-full h-6 animate-spin ease-linear"
                 src="../assets/loading.svg"
@@ -165,5 +182,3 @@ function OtpInputWithValidation({ numberOfDigits = 6 }) {
 }
 
 export default OtpInputWithValidation;
-
-//  <span className="text-white">{formatTime(timeLeft)}</span>

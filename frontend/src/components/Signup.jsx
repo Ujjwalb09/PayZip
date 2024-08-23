@@ -17,22 +17,6 @@ const Signup = () => {
 
   const navigate = useNavigate();
 
-  // const signUp = async (event) => {
-  //   event.preventDefault();
-  //   try {
-  //     const response = await userAxios.post("/signup", {
-  //       firstName,
-  //       lastName,
-  //       username: email,
-  //       password,
-  //     });
-  //     toast.success(response.data.message);
-  //     navigate("/dashboard");
-  //   } catch (error) {
-  //     toast.error(error.response.data.message);
-  //   }
-  // };
-
   const sendOtp = async (e) => {
     e.preventDefault();
     setLoading(true);
