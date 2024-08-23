@@ -27,7 +27,7 @@ const Dashboard = () => {
         {data.length > 0 && (
           <div className="flex flex-col gap-2 mt-4">
             {data.map((data) => (
-              <div className="p-3 flex justify-between border-t-0 border-b border-l shadow-md">
+              <div className="p-3 flex justify-between border-b border-l shadow-md">
                 <div className="flex items-center gap-2">
                   <div className="bg-gray-300 rounded-full h-11 w-11 flex items-center justify-center">
                     {data.firstName.split("")[0]}
