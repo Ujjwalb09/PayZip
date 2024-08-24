@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Topnav = () => {
   const [showLogout, setShowLogout] = useState(false);
 
   const buttonContainerRef = useRef();
+  const logoutBtnContainer = useRef();
+  const navigate = useNavigate();
 
   const handleClickOutside = (e) => {
     if (
       buttonContainerRef.current &&
-      !buttonContainerRef.current.contains(e.target)
+      logoutBtnContainer.current &&
+      !buttonContainerRef.current.contains(e.target) &&
+      !logoutBtnContainer.current.contains(e.target)
     ) {
       setShowLogout(false);
     }
@@ -38,7 +43,11 @@ const Topnav = () => {
       </div>
       {showLogout && (
         <div className="absolute right-3 top-[69px] bg-gray-200 h-[60px] w-[8%] rounded-md flex items-center justify-center shadow-lg">
-          <button className="bg-black px-4 py-2 rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:scale-105 shadow-md text-indigo-100 duration-150">
+          <button
+            ref={logoutBtnContainer}
+            onClick={() => navigate("/signup")}
+            className="bg-black px-4 py-2 rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:scale-105 shadow-md text-indigo-100 duration-150"
+          >
             Logout
           </button>
         </div>
