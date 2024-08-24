@@ -3,6 +3,8 @@ import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { toast } from "react-toastify";
 import { userAxios } from "../utils/axios";
 import axios from "axios";
+import { loadUser } from "../store/reducers/userSlice";
+import { useDispatch } from "react-redux";
 
 function OtpInputWithValidation({ numberOfDigits = 6 }) {
   const [otp, setOtp] = useState(new Array(numberOfDigits).fill(""));
@@ -13,6 +15,7 @@ function OtpInputWithValidation({ numberOfDigits = 6 }) {
   const [timeLeft, setTimeLeft] = useState(120);
 
   const userDetailObj = useOutletContext();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!userDetailObj.email) navigate("/signup");
@@ -61,20 +64,29 @@ function OtpInputWithValidation({ numberOfDigits = 6 }) {
       return;
     }
 
-    try {
-      const response = await userAxios.post("/signup", {
-        firstName: userDetailObj.firstName,
-        lastName: userDetailObj.lastName,
-        username: userDetailObj.email,
-        password: userDetailObj.password,
-        otp: OTP,
-      });
-      toast.success(response.data.message);
-      navigate("/dashboard");
-    } catch (error) {
-      setOtpError(error.response.data.message);
-    }
-    setLoading(false);
+    setTimeout(async () => {
+      try {
+        const response = await userAxios.post("/signup", {
+          firstName: userDetailObj.firstName,
+          lastName: userDetailObj.lastName,
+          username: userDetailObj.email,
+          password: userDetailObj.password,
+          otp: OTP,
+        });
+        toast.success(response.data.message);
+        dispatch(
+          loadUser({
+            firstName: userDetailObj.firstName,
+            lastName: userDetailObj.lastName,
+            username: userDetailObj.email,
+          })
+        );
+        navigate("/dashboard");
+      } catch (error) {
+        setOtpError(error.response.data.message);
+        setLoading(false);
+      }
+    }, 3000);
   };
 
   const resendOTP = async () => {

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { userAxios } from "../utils/axios";
+import { useSelector, useDispatch } from "react-redux";
+import { loadUser } from "../store/reducers/userSlice";
 
 const Signin = () => {
   const [visibility, setVisibility] = useState(false);
@@ -11,23 +13,36 @@ const Signin = () => {
   const [password, setPassword] = useState("");
   const [showToolTip, setShowTooltip] = useState(false);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const signIn = (event) => {
     event.preventDefault();
     setLoading(true);
-    userAxios
-      .post("/signin", {
-        username: email,
-        password,
-      })
-      .then((response) => {
-        toast.success(response.data.message);
-        navigate("/dashboard");
-        setLoading(false);
-      })
-      .catch((error) => {
-        toast.error(error.response.data.message);
-      });
+    setTimeout(() => {
+      userAxios
+        .post("/signin", {
+          username: email,
+          password,
+        })
+        .then((response) => {
+          console.log(response.data);
+          // localStorage.setItem(email, response.data.token);
+          dispatch(
+            loadUser({
+              firstName: response.data.user.firstName,
+              lastName: response.data.user.lastName,
+              username: response.data.user.username,
+            })
+          );
+          toast.success(response.data.message);
+          navigate("/dashboard");
+          setLoading(false);
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+          setLoading(false);
+        });
+    }, 2000);
   };
 
   return (

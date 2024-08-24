@@ -74,7 +74,7 @@ router.post("/signin", async (req, res) => {
 
   const token = "Bearer " + jwt.sign({ userId: user._id }, JWT_SECRET);
 
-  res.status(200).json({ message: "User Successfully Logged In", token });
+  res.status(200).json({ message: "User Successfully Logged In", token, user });
 });
 
 router.put("/update", authMiddleware, async (req, res) => {
