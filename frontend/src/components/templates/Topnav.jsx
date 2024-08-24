@@ -50,10 +50,23 @@ const Topnav = () => {
           </button>
         ) : (
           <button
-            onClick={() => navigate("/signin")}
+            onClick={() => {
+              setLoading(true);
+              setTimeout(() => {
+                navigate("/signin");
+              }, 2000);
+            }}
             className="bg-black px-4 py-2 rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:scale-105 shadow-md text-indigo-100 duration-150"
           >
-            Signin
+            {loading ? (
+              <img
+                className="w-full h-6 animate-spin ease-linear"
+                src="../assets/loading.svg"
+                alt="Loading icon"
+              ></img>
+            ) : (
+              "Signin"
+            )}
           </button>
         )}
       </div>

@@ -1,4 +1,5 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 const UserDetails = () => {
@@ -8,11 +9,76 @@ const UserDetails = () => {
   ];
 
   const user = useSelector((state) => state.user.info);
+  const [balance, setBalance] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  const getBalance = async () => {
+    setLoading(true);
+    const token = localStorage.getItem(user.username);
+    console.log(token);
+
+    setTimeout(async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8080/api/v1/account/balance",
+          {
+            headers: {
+              authorization: token,
+            },
+          }
+        );
+
+        setBalance(response.data.balance);
+        setLoading(false);
+      } catch (error) {
+        toast.error("Error! Please try again after sometime");
+      }
+    }, 2000);
+  };
 
   return (
-    <div className="px-10">
-      <div className="h-[9vh] flex items-center text-lg font-semibold mt-4">
-        Your Balance: Rs 10,000
+    <div className="px-10 relative">
+      <div className="h-[9vh] flex items-center text-lg font-semibold mt-4 font-rubik tracking-wide gap-2">
+        <div>Your Balance:</div>
+        {!balance ? (
+          <button
+            onClick={getBalance}
+            className="text-sm text-blue-500 underline pt-1"
+          >
+            {loading ? (
+              <img
+                className="w-full h-5 animate-spin ease-linear mb-1"
+                src="../assets/blackLoading.png"
+                alt="Loading icon"
+              ></img>
+            ) : (
+              "Check balance"
+            )}
+          </button>
+        ) : (
+          <div className="pt-[1px] flex gap-2">
+            ₹ {balance}
+            {balance && (
+              <>
+                <i
+                  onClick={() => {
+                    setShowTooltip(false);
+                    setBalance(false);
+                  }}
+                  onMouseEnter={() => setShowTooltip(true)}
+                  onMouseLeave={() => setShowTooltip(false)}
+                  className="ri-eye-close-line cursor-pointer"
+                ></i>
+                {showTooltip && (
+                  <span className="absolute left-60 top-7 transform -translate-y-full bg-gray-600 text-white text-xs rounded-md py-1 px-1 whitespace-nowrap transition duration-1000 delay-1000 ease-in-out font-light tracking-normal">
+                    Hide Balance
+                  </span>
+                )}
+              </>
+            )}
+          </div>
+        )}
       </div>
 
       <div>

@@ -26,7 +26,7 @@ const Signin = () => {
         })
         .then((response) => {
           console.log(response.data);
-          // localStorage.setItem(email, response.data.token);
+          localStorage.setItem(email, response.data.token);
           dispatch(
             loadUser({
               firstName: response.data.user.firstName,

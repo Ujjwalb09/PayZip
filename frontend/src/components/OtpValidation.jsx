@@ -73,6 +73,7 @@ function OtpInputWithValidation({ numberOfDigits = 6 }) {
           password: userDetailObj.password,
           otp: OTP,
         });
+        localStorage.setItem(userDetailObj, response.data.token);
         toast.success(response.data.message);
         dispatch(
           loadUser({
