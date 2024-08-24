@@ -5,11 +5,29 @@ const Dashboard = () => {
   const data = [
     { firstName: "Ujjwal", lastName: "Bhatt" },
     { firstName: "Harkirat", lastName: "Singh" },
+    { firstName: "Ujjwal", lastName: "Bhatt" },
+    { firstName: "Harkirat", lastName: "Singh" },
+    { firstName: "Ujjwal", lastName: "Bhatt" },
+    { firstName: "Harkirat", lastName: "Singh" },
+    { firstName: "Ujjwal", lastName: "Bhatt" },
+    { firstName: "Harkirat", lastName: "Singh" },
+    { firstName: "Ujjwal", lastName: "Bhatt" },
+    { firstName: "Harkirat", lastName: "Singh" },
+    { firstName: "Ujjwal", lastName: "Bhatt" },
+    { firstName: "Harkirat", lastName: "Singh" },
+    { firstName: "Ujjwal", lastName: "Bhatt" },
+    { firstName: "Harkirat", lastName: "Singh" },
+    { firstName: "Ujjwal", lastName: "Bhatt" },
+    { firstName: "Harkirat", lastName: "Singh" },
+    { firstName: "Ujjwal", lastName: "Bhatt" },
+    { firstName: "Harkirat", lastName: "Singh" },
   ];
 
   return (
-    <div className="w-full h-screen">
-      <Topnav />
+    <div className="w-full h-screen relative overflow-auto">
+      <div className="sticky top-0 z-10">
+        <Topnav />
+      </div>
       <div className="px-10">
         <div className="h-[9vh] flex items-center text-lg font-semibold mt-4">
           Your Balance: Rs 10,000
@@ -36,7 +54,7 @@ const Dashboard = () => {
                     {data.firstName} {data.lastName}
                   </div>
                 </div>
-                <button className="bg-black text-white px-5 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:scale-105">
+                <button className="bg-black text-indigo-100 px-5 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:scale-105 duration-150">
                   Send Money
                 </button>
               </div>
