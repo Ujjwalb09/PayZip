@@ -1,17 +1,17 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import userAxios from "../../utils/axios";
 
 const UserDetails = () => {
-  const data = [
-    { firstName: "Ujjwal", lastName: "Bhatt" },
-    { firstName: "Harkirat", lastName: "Singh" },
-  ];
+  const [data, setData] = useState("");
 
   const user = useSelector((state) => state.user.info);
   const [balance, setBalance] = useState("");
   const [loading, setLoading] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [query, setQuery] = useState("");
+  const [isChecked, setIsChecked] = useState(false);
 
   const getBalance = async () => {
     setLoading(true);
@@ -37,6 +37,23 @@ const UserDetails = () => {
     }, 2000);
   };
 
+  const getUsers = async () => {
+    try {
+      const response = await userAxios.get("/bulk", {
+        params: {
+          filter: query,
+        },
+      });
+      console.log(response);
+      setData(response.data.users);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    query && getUsers();
+    isChecked && getUsers();
+  }, [query, isChecked]);
+
   return (
     <div className="px-10 relative">
       <div className="h-[9vh] flex items-center text-lg font-semibold mt-4 font-rubik tracking-wide gap-2">
@@ -44,7 +61,10 @@ const UserDetails = () => {
         {!balance ? (
           <button
             onClick={getBalance}
-            className="text-sm text-blue-500 underline pt-1"
+            disabled={!user}
+            className={`text-sm text-blue-500 underline pt-1 ${
+              !user && "cursor-not-allowed"
+            }`}
           >
             {loading ? (
               <img
@@ -84,13 +104,22 @@ const UserDetails = () => {
       <div>
         <div className="font-semibold">Users</div>
         <input
+          onChange={(e) => setQuery(e.target.value)}
           className="w-full mt-2 border px-2 py-1 rounded-lg"
           type="text"
           placeholder="Search Users..."
         />
       </div>
+      <div className="text-sm flex gap-1 items-center mt-2">
+        <input
+          onClick={(e) => setIsChecked(e.target.checked)}
+          className=""
+          type="checkbox"
+        />
+        <div className="pt-[2px]">All users</div>
+      </div>
 
-      {data.length > 0 && (
+      {data.length > 0 && (query.length > 0 || isChecked) && (
         <div className="flex flex-col gap-2 mt-4">
           {data.map((data, index) => (
             <div
