@@ -29,14 +29,14 @@ const Topnav = () => {
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      user && localStorage.removeItem(user.username);
       dispatch(removeUser());
     };
   }, []);
   return (
     <div className="w-full h-[7vh] flex justify-between border-b border-gray-200 shadow-md items-center relative z-50 bg-white">
-      <div className="px-6 flex items-center gap-1 text-xl">
-        <i className="ri-currency-fill text-2xl"></i>
-        PayZip
+      <div className="px-6 pb-1">
+        <img className="h-14" src="../../assets/payzip.png" alt="" />
       </div>
       <div className="flex gap-4 px-4 text-center">
         <div className="flex items-center">Hello</div>

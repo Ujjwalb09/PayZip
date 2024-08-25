@@ -36,7 +36,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen w-full bg-black">
+    <div className="flex items-center justify-center min-h-screen w-full bg-gray-300">
       <div className="bg-white rounded-lg shadow-md p-6 w-[21%]">
         <h2 className="text-3xl font-bold mb-2 text-center">Sign Up</h2>
         <p className="text-gray-500 text-center mb-6">
@@ -58,7 +58,7 @@ const Signup = () => {
               id="firstName"
               name="firstName"
               placeholder="John"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-black"
             />
           </div>
 
@@ -76,7 +76,7 @@ const Signup = () => {
               id="lastName"
               name="lastName"
               placeholder="Doe"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-black"
             />
           </div>
 
@@ -94,7 +94,7 @@ const Signup = () => {
               name="email"
               required
               placeholder="johndoe@example.com"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-black"
             />
           </div>
 
@@ -111,7 +111,7 @@ const Signup = () => {
               id="password"
               name="password"
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-black"
             />
             <i
               onClick={() => setVisibility(!visibility)}

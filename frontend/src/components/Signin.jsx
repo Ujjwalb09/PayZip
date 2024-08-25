@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import userAxios from "../utils/axios";
 import { useSelector, useDispatch } from "react-redux";
 import { loadUser } from "../store/reducers/userSlice";
+import Topnav from "./templates/Topnav";
 
 const Signin = () => {
   const [visibility, setVisibility] = useState(false);
@@ -42,12 +43,12 @@ const Signin = () => {
           toast.error(error.response.data.message);
           setLoading(false);
         });
-    }, 2000);
+    }, 1000);
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen w-full bg-black">
-      <div className="bg-white rounded-lg shadow-md p-6 w-[21%]">
+    <div className="flex items-center justify-center min-h-screen w-full bg-gray-300">
+      <div className="bg-white rounded-lg shadow-md p-6 w-[20%]">
         <h2 className="text-3xl font-bold mb-2 text-center">Sign In</h2>
         <p className="text-gray-500 text-center mb-6">
           Enter your credentials to access your account
@@ -68,7 +69,7 @@ const Signin = () => {
               id="email"
               name="email"
               placeholder="johndoe@example.com"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-black"
             />
           </div>
 
@@ -85,7 +86,7 @@ const Signin = () => {
               id="password"
               name="password"
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-black"
             />
             <i
               onClick={() => setVisibility(!visibility)}

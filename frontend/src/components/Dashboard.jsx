@@ -4,7 +4,7 @@ import UserDetails from "./templates/UserDetails";
 
 const Dashboard = () => {
   return (
-    <div className="w-full h-screen relative overflow-auto">
+    <div className="w-full h-screen relative overflow-auto ">
       <div className="sticky top-0 z-10">
         <Topnav />
       </div>

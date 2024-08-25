@@ -112,6 +112,7 @@ const UserDetails = () => {
       </div>
       <div className="text-sm flex gap-1 items-center mt-2">
         <input
+          disabled={!user}
           onClick={(e) => setIsChecked(e.target.checked)}
           className=""
           type="checkbox"
