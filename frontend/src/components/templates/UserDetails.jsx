@@ -34,7 +34,7 @@ const UserDetails = () => {
       } catch (error) {
         toast.error("Error! Please try again after sometime");
       }
-    }, 2000);
+    }, 1000);
   };
 
   const getUsers = async () => {

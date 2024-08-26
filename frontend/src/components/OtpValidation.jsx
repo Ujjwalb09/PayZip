@@ -73,7 +73,7 @@ function OtpInputWithValidation({ numberOfDigits = 6 }) {
           password: userDetailObj.password,
           otp: OTP,
         });
-        localStorage.setItem(userDetailObj, response.data.token);
+        localStorage.setItem(userDetailObj.email, response.data.token);
         toast.success(response.data.message);
         dispatch(
           loadUser({
@@ -87,7 +87,7 @@ function OtpInputWithValidation({ numberOfDigits = 6 }) {
         setOtpError(error.response.data.message);
         setLoading(false);
       }
-    }, 3000);
+    }, 2000);
   };
 
   const resendOTP = async () => {
