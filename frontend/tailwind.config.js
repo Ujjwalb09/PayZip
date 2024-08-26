@@ -5,6 +5,8 @@ export default {
     extend: {
       fontFamily: {
         rubik: ["Rubik", "sans-serif"],
+        merriweather: ["Merriweather", "sans-serif"],
+        quicksand: ["Quicksand", "sans-serif"],
       },
     },
   },

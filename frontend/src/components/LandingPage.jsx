@@ -1,0 +1,79 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+const LandingPage = () => {
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  return (
+    <div className="w-screen h-screen overflow-hidden">
+      <div className="TOPNAV w-full h-[9vh] flex justify-between border-gray-200 items-center relative z-50 bg-white shadow-md">
+        <div className="pl-[6rem] pb-1">
+          <img className="h-20" src="../../assets/payzip.png" alt="" />
+        </div>
+
+        <div className="flex justify-between items-center w-[45%]">
+          <div className="flex gap-20 font-semibold font-rubik">
+            <p>Home</p>
+            <p>Contact Us</p>
+            <p>About</p>
+          </div>
+          <button
+            type="submit"
+            className="w-[10rem] bg-black mr-32 text-white py-2 px-4 rounded-3xl hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:scale-105"
+          >
+            SignIn
+          </button>
+        </div>
+      </div>
+      <div className="w-screen h-screen flex">
+        <div className="LEFT PANEL flex items-center justify-center w-[40%] h-screen bg-white">
+          <div className="WELCOME TEXT flex flex-col text-center gap-[2.2rem] mb-[10rem] w-[30rem] h-[30rem] items-center justify-center">
+            <div className="relative font-merriweather font-bold flex flex-col gap-3">
+              <h1 className="text-6xl">Welcome</h1>
+              <h2 className="text-5xl">To</h2>
+              <h1 className="text-6xl">PayZip</h1>
+            </div>
+            <div className="w-[23.2rem] text-wrap font-semibold font-quicksand text-2xl">
+              <p>
+                A seamless and secure payment interface for your online
+                transcations
+              </p>
+            </div>
+            <div className="flex items-center">
+              <button
+                onClick={() => {
+                  setLoading(true);
+                  setTimeout(() => {
+                    navigate("/signup");
+                  }, 1000);
+                }}
+                type="submit"
+                className="w-[12rem] bg-black text-white py-3 px-4  rounded-3xl hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:scale-105 flex justify-center gap-2 items-center"
+              >
+                {loading ? (
+                  <img
+                    className="w-full h-6 animate-spin ease-linear"
+                    src="../assets/loading.svg"
+                    alt="Loading icon"
+                  ></img>
+                ) : (
+                  "Get Started"
+                )}
+                {!loading && <i class="ri-arrow-right-line"></i>}
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="IMAGE PANEL flex justify-center items-center w-[60%] h-screen bg-white">
+          <img
+            className="h-[69%] mb-[14rem] mr-[6.8rem]"
+            src="../assets/landing-image1.jpg"
+            alt=""
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default LandingPage;
