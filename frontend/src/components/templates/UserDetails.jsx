@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import userAxios from "../../utils/axios";
+import { Link, Outlet } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const UserDetails = () => {
   const [data, setData] = useState("");
@@ -16,7 +18,6 @@ const UserDetails = () => {
   const getBalance = async () => {
     setLoading(true);
     const token = localStorage.getItem(user.username);
-    console.log(token);
 
     setTimeout(async () => {
       try {
@@ -135,13 +136,17 @@ const UserDetails = () => {
                   {data.firstName} {data.lastName}
                 </div>
               </div>
-              <button className="bg-black text-indigo-100 px-5 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:scale-105 duration-150">
+              <Link
+                to={"/dashboard/send"}
+                className="bg-black flex items-center text-indigo-100 px-4 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:scale-105 duration-150"
+              >
                 Send Money
-              </button>
+              </Link>
             </div>
           ))}
         </div>
       )}
+      <Outlet />
     </div>
   );
 };

@@ -15,8 +15,9 @@ function App() {
           <Route path="/signup/send-otp" element={<OtpInputWithValidation />} />
         </Route>
         <Route path="/signin" element={<Signin />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/send" element={<SendMoney />} />
+        <Route path="/dashboard" element={<Dashboard />}>
+          <Route path="/dashboard/send" element={<SendMoney />} />
+        </Route>
       </Routes>
     </div>
   );

@@ -4,14 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { removeUser } from "../../store/reducers/userSlice";
 
-const Topnav = () => {
+const Topnav = ({ user }) => {
   const [showLogout, setShowLogout] = useState(false);
   const [loading, setLoading] = useState(false);
   const buttonContainerRef = useRef();
   const logoutBtnContainer = useRef();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user.info);
-  const dispatch = useDispatch();
 
   const handleClickOutside = (e) => {
     if (
@@ -29,8 +27,6 @@ const Topnav = () => {
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
-      user && localStorage.removeItem(user.username);
-      dispatch(removeUser());
     };
   }, []);
   return (
