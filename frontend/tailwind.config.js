@@ -9,6 +9,7 @@ export default {
         quicksand: ["Quicksand", "sans-serif"],
         raleway: ["Raleway", "sans-serif"],
         caveat: ["Caveat", "cursive"],
+        kalam: ["Kalam", "cursive"],
       },
     },
   },
