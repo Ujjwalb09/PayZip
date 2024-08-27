@@ -43,7 +43,7 @@ const Topnav = () => {
         {user ? (
           <button
             ref={buttonContainerRef}
-            onClick={() => setShowLogout(true)}
+            onClick={() => setShowLogout((prev) => !prev)}
             className="flex items-center justify-center w-12 h-12 rounded-full bg-gray-200 text-xl font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-400"
           >
             {user.firstName.split("")[0]}
@@ -70,7 +70,7 @@ const Topnav = () => {
           </button>
         )}
       </div>
-      {showLogout && (
+      {showLogout && user && (
         <div className="absolute right-3 top-[69px] bg-gray-200 h-[60px] w-[8%] rounded-md flex items-center justify-center shadow-lg">
           <button
             ref={logoutBtnContainer}
