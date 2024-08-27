@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { removeUser } from "../../store/reducers/userSlice";
 
 const Topnav = ({ user }) => {
   const [showLogout, setShowLogout] = useState(false);
@@ -34,8 +32,10 @@ const Topnav = ({ user }) => {
       <div className="px-6 pb-1">
         <img className="h-14" src="../../assets/payzip.png" alt="" />
       </div>
-      <div className="flex gap-4 px-4 text-center">
-        <div className="flex items-center">Hello</div>
+      <div className="flex gap-4 px-10 text-center">
+        <div className="flex items-center font-rubik text-lg">
+          {user && "Hello"}
+        </div>
         {user ? (
           <button
             ref={buttonContainerRef}
