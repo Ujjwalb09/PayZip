@@ -10,7 +10,7 @@ const SendMoney = () => {
   const transferDetail = useOutletContext();
   const [transferSuccesful, setTransferSuccessful] = useState(false);
   const [timer, setTimer] = useState(4);
-  console.log(transferDetail);
+  const [loading, setLoading] = useState(false);
 
   const transfer = async () => {
     if (transferAmount < 1) {
@@ -28,28 +28,33 @@ const SendMoney = () => {
       return;
     }
     const token = localStorage.getItem(transferDetail.payorUsername);
-    console.log(token);
-    try {
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/account/transfer",
-        {
-          to: transferDetail.payeeId,
-          amount: transferAmount,
-        },
-        {
-          headers: {
-            authorization: token,
+    setLoading(true);
+
+    setTimeout(async () => {
+      try {
+        const response = await axios.post(
+          "http://localhost:8080/api/v1/account/transfer",
+          {
+            to: transferDetail.payeeId,
+            amount: transferAmount,
           },
-        }
-      );
-      // toast.success("Transfer Successful");
-      setTransferSuccessful(true);
-    } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message, {
-        position: "bottom-center",
-      });
-    }
+          {
+            headers: {
+              authorization: token,
+            },
+          }
+        );
+        // toast.success("Transfer Successful");
+        setTransferSuccessful(true);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+        toast.error(error.response.data.message, {
+          position: "bottom-center",
+        });
+        setLoading(false);
+      }
+    }, 4000);
   };
 
   useEffect(() => {
@@ -118,7 +123,15 @@ const SendMoney = () => {
                     onClick={transfer}
                     className="bg-[#21C55D] text-lg py-2 rounded-md text-white font-bold font-quicksand mt-1 hover:scale-105 hover:bg-[#19a34c] duration-150"
                   >
-                    Initiate Transfer
+                    {loading ? (
+                      <img
+                        className="w-full h-6 animate-spin ease-linear mb-1"
+                        src="../assets/loading.svg"
+                        alt="Loading icon"
+                      ></img>
+                    ) : (
+                      "Initiate transfer"
+                    )}
                   </button>
                 </div>
               </div>
