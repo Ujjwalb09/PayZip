@@ -2,19 +2,21 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import userAxios from "../../utils/axios";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const UserDetails = () => {
   const [data, setData] = useState("");
 
   const user = useSelector((state) => state.user.info);
+  console.log(user);
   const [balance, setBalance] = useState("");
   const [loading, setLoading] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
   const [query, setQuery] = useState("");
   const [isChecked, setIsChecked] = useState(false);
-
+  const [outletDetails, setOutletDetails] = useState(null);
+  const navigate = useNavigate();
   const getBalance = async () => {
     setLoading(true);
     const token = localStorage.getItem(user.username);
@@ -136,17 +138,26 @@ const UserDetails = () => {
                   {data.firstName} {data.lastName}
                 </div>
               </div>
-              <Link
-                to={"/dashboard/send"}
+              <button
+                onClick={() => {
+                  const obj = {
+                    payeeFirstName: data.firstName,
+                    payeeLastName: data.lastName,
+                    payeeId: data._id,
+                    payorUsername: user.username,
+                  };
+                  setOutletDetails(obj);
+                  navigate("/dashboard/send");
+                }}
                 className="bg-black flex items-center text-indigo-100 px-4 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:scale-105 duration-150"
               >
                 Send Money
-              </Link>
+              </button>
             </div>
           ))}
         </div>
       )}
-      <Outlet />
+      <Outlet context={outletDetails} />
     </div>
   );
 };
