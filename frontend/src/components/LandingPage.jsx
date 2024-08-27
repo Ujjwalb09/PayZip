@@ -31,7 +31,7 @@ const LandingPage = () => {
                   }, 1000);
                 }}
                 type="submit"
-                className="w-[12rem] bg-black text-white py-3 px-4  rounded-3xl hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:scale-105 flex justify-center gap-2 items-center"
+                className="w-[11rem] bg-black text-white py-[0.65rem] rounded-3xl hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:scale-105 flex justify-center gap-2 items-center font-caveat text-xl"
               >
                 {loading ? (
                   <img

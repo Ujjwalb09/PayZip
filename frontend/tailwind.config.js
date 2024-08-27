@@ -7,6 +7,8 @@ export default {
         rubik: ["Rubik", "sans-serif"],
         merriweather: ["Merriweather", "sans-serif"],
         quicksand: ["Quicksand", "sans-serif"],
+        raleway: ["Raleway", "sans-serif"],
+        caveat: ["Caveat", "cursive"],
       },
     },
   },

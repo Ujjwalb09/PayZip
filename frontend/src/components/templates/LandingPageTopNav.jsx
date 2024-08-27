@@ -14,8 +14,8 @@ const LandingPageTopNav = ({ btnText }) => {
         </Link>
       </div>
 
-      <div className="flex justify-between items-center w-[45%]">
-        <div className="flex gap-20 font-semibold font-rubik">
+      <div className="flex justify-between items-center w-[44%]">
+        <div className="flex gap-[7rem] font-semibold font-raleway">
           <p>Home</p>
           <p>Contact Us</p>
           <p>About</p>
@@ -27,7 +27,7 @@ const LandingPageTopNav = ({ btnText }) => {
               btnText === "Sign Up" ? navigate("/signup") : navigate("/signin");
             }, 1000);
           }}
-          className="w-[10rem] bg-black mr-32 text-white py-2 px-4 rounded-3xl hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:scale-105"
+          className="w-[8rem] bg-black mr-32 text-white py-[0.4rem] rounded-3xl hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:scale-105 font-raleway text-lg"
         >
           {loading ? (
             <img
