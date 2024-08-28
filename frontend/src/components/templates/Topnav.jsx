@@ -9,6 +9,12 @@ const Topnav = ({ user }) => {
   const logoutBtnContainer = useRef();
   const navigate = useNavigate();
 
+  const color = () => {
+    return `rgba(${(Math.random() * 255).toFixed()}, ${(
+      Math.random() * 255
+    ).toFixed()}, ${(Math.random() * 255).toFixed()}, 0.4)`;
+  };
+
   const handleClickOutside = (e) => {
     if (
       buttonContainerRef.current &&
@@ -40,7 +46,7 @@ const Topnav = ({ user }) => {
           <button
             ref={buttonContainerRef}
             onClick={() => setShowLogout((prev) => !prev)}
-            className="flex items-center justify-center w-12 h-12 rounded-full bg-gray-200 text-xl font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-400"
+            className="flex items-center justify-center w-12 h-12 rounded-full bg-gray-200 text-xl font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-400 pt-1"
           >
             {user.firstName.split("")[0]}
           </button>

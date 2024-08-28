@@ -8,8 +8,15 @@ import { toast } from "react-toastify";
 const UserDetails = () => {
   const [data, setData] = useState("");
 
+  const color = () => {
+    return `rgba(${(Math.random() * 255).toFixed()}, ${(
+      Math.random() * 255
+    ).toFixed()}, ${(Math.random() * 255).toFixed()}, 0.4)`;
+  };
+
   const user = useSelector((state) => state.user.info);
   console.log(user);
+  console.log(data);
   const [balance, setBalance] = useState("");
   const [loading, setLoading] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
@@ -125,36 +132,39 @@ const UserDetails = () => {
 
       {data.length > 0 && (query.length > 0 || isChecked) && (
         <div className="flex flex-col gap-2 mt-4">
-          {data.map((data, index) => (
-            <div
-              key={index}
-              className="p-3 flex justify-between border-b border-l shadow-md"
-            >
-              <div className="flex items-center gap-2">
-                <div className="bg-gray-300 rounded-full h-11 w-11 flex items-center justify-center">
-                  {data.firstName.split("")[0]}
+          {data.map(
+            (data, index) =>
+              data.username !== user.username && (
+                <div
+                  key={index}
+                  className="p-3 flex justify-between border-b border-l shadow-md"
+                >
+                  <div className="flex items-center gap-2">
+                    <div className="bg-gray-300 rounded-full h-11 w-11 flex items-center justify-center">
+                      {data.firstName.split("")[0]}
+                    </div>
+                    <div>
+                      {data.firstName} {data.lastName}
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => {
+                      const obj = {
+                        payeeFirstName: data.firstName,
+                        payeeLastName: data.lastName,
+                        payeeId: data._id,
+                        payorUsername: user.username,
+                      };
+                      setOutletDetails(obj);
+                      navigate("/dashboard/send");
+                    }}
+                    className="bg-black flex items-center text-indigo-100 px-4 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:scale-105 duration-150"
+                  >
+                    Send Money
+                  </button>
                 </div>
-                <div>
-                  {data.firstName} {data.lastName}
-                </div>
-              </div>
-              <button
-                onClick={() => {
-                  const obj = {
-                    payeeFirstName: data.firstName,
-                    payeeLastName: data.lastName,
-                    payeeId: data._id,
-                    payorUsername: user.username,
-                  };
-                  setOutletDetails(obj);
-                  navigate("/dashboard/send");
-                }}
-                className="bg-black flex items-center text-indigo-100 px-4 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:scale-105 duration-150"
-              >
-                Send Money
-              </button>
-            </div>
-          ))}
+              )
+          )}
         </div>
       )}
       <Outlet context={outletDetails} />
