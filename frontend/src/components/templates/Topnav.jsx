@@ -8,6 +8,7 @@ const Topnav = ({ user }) => {
   const buttonContainerRef = useRef();
   const logoutBtnContainer = useRef();
   const navigate = useNavigate();
+  console.log(user);
 
   const color = () => {
     return `rgba(${(Math.random() * 255).toFixed()}, ${(
@@ -73,27 +74,41 @@ const Topnav = ({ user }) => {
         )}
       </div>
       {showLogout && user && (
-        <div className="absolute right-3 top-[69px] bg-gray-200 h-[60px] w-[8%] rounded-md flex items-center justify-center shadow-lg">
-          <button
-            ref={logoutBtnContainer}
-            onClick={() => {
-              setLoading(true);
-              setTimeout(() => {
-                navigate("/signin");
-              }, 2000);
-            }}
-            className="bg-black px-4 py-2 rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:scale-105 shadow-md text-indigo-100 duration-150 font-raleway text-lg"
-          >
-            {loading ? (
-              <img
-                className="w-full h-6 animate-spin ease-linear"
-                src="../assets/loading.svg"
-                alt="Loading icon"
-              ></img>
-            ) : (
-              "Logout"
-            )}
-          </button>
+        <div
+          ref={logoutBtnContainer}
+          className="absolute right-3 top-[63px] bg-gray-200 h-[8rem] w-[10%] rounded-md shadow-lg text-wrap flex flex-col justify-between gap-3"
+        >
+          <div className="p-2 font-merriweather">
+            <p className="text-gray-700">
+              {user.firstName} {user.lastName}
+            </p>
+            <p className="text-[0.65rem] text-gray-700">{user.username}</p>
+            <button className="text-xs underline text-blue-600">
+              Edit Profile
+            </button>
+          </div>
+
+          <div className="flex items-center justify-center mb-1">
+            <button
+              onClick={() => {
+                setLoading(true);
+                setTimeout(() => {
+                  navigate("/signin");
+                }, 2000);
+              }}
+              className="bg-black px-3 py-1 rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:scale-105 shadow-md text-indigo-100 duration-150 font-raleway text-md"
+            >
+              {loading ? (
+                <img
+                  className="w-full h-6 animate-spin ease-linear"
+                  src="../assets/loading.svg"
+                  alt="Loading icon"
+                ></img>
+              ) : (
+                "Logout"
+              )}
+            </button>
+          </div>
         </div>
       )}
     </div>
