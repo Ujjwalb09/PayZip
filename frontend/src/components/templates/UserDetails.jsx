@@ -8,12 +8,6 @@ import { toast } from "react-toastify";
 const UserDetails = () => {
   const [data, setData] = useState("");
 
-  const color = () => {
-    return `rgba(${(Math.random() * 255).toFixed()}, ${(
-      Math.random() * 255
-    ).toFixed()}, ${(Math.random() * 255).toFixed()}, 0.4)`;
-  };
-
   const user = useSelector((state) => state.user.info);
   console.log(user);
   console.log(data);

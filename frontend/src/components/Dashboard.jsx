@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Topnav from "./templates/Topnav";
 import UserDetails from "./templates/UserDetails";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../store/reducers/userSlice";
+import { Outlet } from "react-router-dom";
 
 const Dashboard = () => {
   const dispatch = useDispatch();

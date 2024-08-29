@@ -82,7 +82,7 @@ router.put("/update", authMiddleware, async (req, res) => {
 
   const user = await User.findById({ _id: userId });
 
-  if (req.body.password) {
+  if (req.body.password && req.body.password !== "") {
     //zod validation of password
     const passResponse = passSchema.safeParse(req.body.password);
 
@@ -103,7 +103,7 @@ router.put("/update", authMiddleware, async (req, res) => {
 
   await user.updateOne(req.body);
 
-  res.json({ message: "successfully updated" });
+  res.json({ message: "Update Successful", user });
 });
 
 router.get("/bulk", async (req, res) => {
