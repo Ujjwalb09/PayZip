@@ -4,8 +4,8 @@ import { toast } from "react-toastify";
 import userAxios from "../utils/axios";
 import { useSelector, useDispatch } from "react-redux";
 import { loadUser } from "../store/reducers/userSlice";
-import Topnav from "./templates/Topnav";
 import LandingPageTopNav from "./templates/LandingPageTopNav";
+import { motion } from "framer-motion";
 
 const Signin = () => {
   const [visibility, setVisibility] = useState(false);
@@ -47,11 +47,38 @@ const Signin = () => {
     }, 1000);
   };
 
+  const leftPanelVariants = {
+    hidden: { x: "-100%" },
+    visible: { x: 0, transition: { duration: 0.8, ease: "easeOut" } },
+  };
+
+  const rightPanelVariants = {
+    hidden: { x: "100%" },
+    visible: { x: 0, transition: { duration: 0.8, ease: "easeOut" } },
+  };
+
+  const topNavVariants = {
+    hidden: { y: "-100%" },
+    visible: { y: 0, transition: { duration: 0.8, ease: "easeOut" } },
+  };
+
   return (
     <div className="w-screen h-screen overflow-hidden ">
-      <LandingPageTopNav btnText="Sign Up" />
-      <div className="w-full h-screen bg-white flex">
-        <div className="flex items-center justify-center min-h-screen w-[50%]">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={topNavVariants}
+        className="fixed w-full"
+      >
+        <LandingPageTopNav btnText={"Sign Up"} />
+      </motion.div>
+      <div className="w-full h-screen bg-white flex mt-[4.2rem]">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={leftPanelVariants}
+          className="LEFT PANEL flex items-center justify-center min-h-screen w-[50%]"
+        >
           <div className="SIGN IN CARD bg-white rounded-lg shadow-2xl border p-6 w-[39%] mb-[7rem]">
             <h2 className="text-3xl font-bold mb-2 text-center">Sign In</h2>
             <p className="text-gray-500 text-center mb-6">
@@ -131,11 +158,16 @@ const Signin = () => {
               </Link>
             </p>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="w-[50%] bg-white">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={rightPanelVariants}
+          className="RIGHT PANEL w-[50%] bg-white"
+        >
           <img className="h-[85%]" src="../assets/signIn.jpg" alt="" />
-        </div>
+        </motion.div>
       </div>
     </div>
   );

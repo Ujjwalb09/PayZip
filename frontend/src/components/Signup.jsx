@@ -3,6 +3,7 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import LandingPageTopNav from "./templates/LandingPageTopNav";
+import { motion } from "framer-motion";
 
 const Signup = () => {
   const [firstName, setFirstName] = useState("");
@@ -16,6 +17,21 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+
+  const leftPanelVariants = {
+    hidden: { x: "-100%" },
+    visible: { x: 0, transition: { duration: 0.8, ease: "easeOut" } },
+  };
+
+  const rightPanelVariants = {
+    hidden: { x: "100%" },
+    visible: { x: 0, transition: { duration: 0.8, ease: "easeOut" } },
+  };
+
+  const topNavVariants = {
+    hidden: { y: "-100%" },
+    visible: { y: 0, transition: { duration: 0.8, ease: "easeOut" } },
+  };
 
   const sendOtp = async (e) => {
     e.preventDefault();
@@ -42,9 +58,21 @@ const Signup = () => {
 
   return (
     <div className="h-screen w-screen overflow-hidden">
-      <LandingPageTopNav btnText={"Sign In"} />
-      <div className="w-screen h-screen flex">
-        <div className="flex items-center justify-center h-screen w-[50%]">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={topNavVariants}
+        className="fixed w-full"
+      >
+        <LandingPageTopNav btnText={"Sign In"} />
+      </motion.div>
+      <div className="w-screen h-screen flex mt-[4rem]">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={leftPanelVariants}
+          className="LEFT PANEL flex items-center justify-center h-screen w-[50%]"
+        >
           <div className="SIGN UP CARD bg-white rounded-lg shadow-2xl border p-6 w-[40%] mb-[5.5rem]">
             <h2 className="text-3xl font-bold mb-2 text-center">Sign Up</h2>
             <p className="text-gray-500 text-center mb-6">
@@ -139,7 +167,7 @@ const Signup = () => {
 
               <button
                 type="submit"
-                className="w-full bg-black text-white py-2 px-4 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 font-raleway text-lg"
+                className="w-full bg-black text-white py-2 px-4 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 font-raleway text-lg hover:scale-105 duration-200"
               >
                 {loading ? (
                   <img
@@ -160,15 +188,20 @@ const Signup = () => {
               </Link>
             </p>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="w-[50%]">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={rightPanelVariants}
+          className="RIGHT PANEL w-[50%]"
+        >
           <img
             className="h-[80%] mt-[2rem]"
             src="../assets/signup.svg"
             alt=""
           />
-        </div>
+        </motion.div>
       </div>
       <Outlet context={{ firstName, lastName, email, password }} />
     </div>

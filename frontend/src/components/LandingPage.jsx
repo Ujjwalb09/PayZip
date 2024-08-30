@@ -1,25 +1,98 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import LandingPageTopNav from "./templates/LandingPageTopNav";
 
 const LandingPage = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [animationComplete, setAnimationComplete] = useState(false);
+
+  const leftPanelVariants = {
+    hidden: { x: "-100%" },
+    visible: { x: 0, transition: { duration: 0.8, ease: "easeOut" } },
+  };
+
+  const rightPanelVariants = {
+    hidden: { x: "100%" },
+    visible: { x: 0, transition: { duration: 0.8, ease: "easeOut" } },
+  };
+
+  const topNavVariants = {
+    hidden: { y: "-100%" },
+    visible: { y: 0, transition: { duration: 0.8, ease: "easeOut" } },
+  };
+
+  const typewriterVariants = {
+    hidden: { opacity: 0 },
+    visible: (i) => ({
+      opacity: 1,
+      transition: { delay: i * 0.3, duration: 0.8, ease: "easeOut" },
+    }),
+  };
+
+  useEffect(() => {
+    if (!animationComplete) {
+      setTimeout(() => {
+        setAnimationComplete(true);
+      }, 1000); // Adjust the time as per your animation duration
+    }
+  }, [animationComplete]);
+
   return (
     <div className="w-screen h-screen overflow-hidden">
-      <LandingPageTopNav btnText={"Sign In"} />
-      <div className="w-screen h-screen flex">
-        <div className="LEFT PANEL flex items-center justify-center w-[40%] h-screen bg-white">
+      {/* Animated Top Navigation */}
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={topNavVariants}
+        className="fixed w-full"
+      >
+        <LandingPageTopNav btnText={"Sign In"} />
+      </motion.div>
+
+      <div className="w-screen h-screen flex mt-[5.1rem]">
+        {/* Animated Left Panel */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={leftPanelVariants}
+          className="LEFT PANEL flex items-center justify-center w-[40%] h-screen bg-white"
+        >
           <div className="WELCOME TEXT flex flex-col text-center gap-[2.2rem] mb-[8rem] w-[30rem] h-[30rem] items-center justify-center">
             <div className="relative font-kalam font-bold flex flex-col gap-3">
-              <h1 className="text-7xl">Welcome</h1>
-              <h2 className="text-6xl">To</h2>
-              <h1 className="text-7xl">PayZip</h1>
+              <motion.h1
+                initial="hidden"
+                animate={animationComplete ? "visible" : "hidden"}
+                variants={typewriterVariants}
+                custom={0}
+                className="text-7xl"
+              >
+                Welcome
+              </motion.h1>
+              <motion.h2
+                initial="hidden"
+                animate={animationComplete ? "visible" : "hidden"}
+                variants={typewriterVariants}
+                custom={1}
+                className="text-6xl"
+              >
+                To
+              </motion.h2>
+              <motion.h1
+                initial="hidden"
+                animate={animationComplete ? "visible" : "hidden"}
+                variants={typewriterVariants}
+                custom={2}
+                className="text-7xl"
+              >
+                PayZip
+              </motion.h1>
             </div>
             <div className="w-[30rem] text-wrap font-semibold font-quicksand text-[1.7rem]">
               <p>
                 A seamless and secure payment interface for your online
-                transcations
+                transactions
               </p>
             </div>
             <div className="flex items-center">
@@ -42,18 +115,25 @@ const LandingPage = () => {
                 ) : (
                   "Get Started"
                 )}
-                {!loading && <i class="ri-arrow-right-line"></i>}
+                {!loading && <i className="ri-arrow-right-line"></i>}
               </button>
             </div>
           </div>
-        </div>
-        <div className="IMAGE PANEL flex justify-center items-center w-[60%] h-screen bg-white">
+        </motion.div>
+
+        {/* Animated Right Panel */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={rightPanelVariants}
+          className="IMAGE RIGHT PANEL flex justify-center items-center w-[60%] h-screen bg-white"
+        >
           <img
-            className="h-[69%] mb-[12rem] mr-[6.8rem]"
+            className="h-[68%] mb-[12rem] mr-[6rem]"
             src="../assets/landing-image1.jpg"
             alt=""
           />
-        </div>
+        </motion.div>
       </div>
     </div>
   );

@@ -27,7 +27,7 @@ const LandingPageTopNav = ({ btnText }) => {
               btnText === "Sign Up" ? navigate("/signup") : navigate("/signin");
             }, 1000);
           }}
-          className="w-[8rem] bg-black mr-32 text-white py-[0.4rem] rounded-3xl hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:scale-105 font-raleway text-lg"
+          className="w-[8rem] bg-black mr-32 text-white py-[0.4rem] rounded-3xl hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:scale-105 font-raleway text-lg duration-200"
         >
           {loading ? (
             <img
