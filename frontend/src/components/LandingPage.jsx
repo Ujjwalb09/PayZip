@@ -35,13 +35,12 @@ const LandingPage = () => {
     if (!animationComplete) {
       setTimeout(() => {
         setAnimationComplete(true);
-      }, 1000); // Adjust the time as per your animation duration
+      }, 1000);
     }
   }, [animationComplete]);
 
   return (
     <div className="w-screen h-screen overflow-hidden">
-      {/* Animated Top Navigation */}
       <motion.div
         initial="hidden"
         animate="visible"
@@ -52,7 +51,6 @@ const LandingPage = () => {
       </motion.div>
 
       <div className="w-screen h-screen flex mt-[5.1rem]">
-        {/* Animated Left Panel */}
         <motion.div
           initial="hidden"
           animate="visible"
@@ -121,7 +119,6 @@ const LandingPage = () => {
           </div>
         </motion.div>
 
-        {/* Animated Right Panel */}
         <motion.div
           initial="hidden"
           animate="visible"

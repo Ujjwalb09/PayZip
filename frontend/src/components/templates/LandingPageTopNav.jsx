@@ -16,8 +16,8 @@ const LandingPageTopNav = ({ btnText }) => {
 
       <div className="flex justify-between items-center w-[44%]">
         <div className="flex gap-[7rem] font-semibold font-raleway">
-          <p>Home</p>
-          <p>Contact Us</p>
+          <Link to={"/"}>Home</Link>
+          <Link to={"/contactUs"}>Contact Us</Link>
           <p>About</p>
         </div>
         <button

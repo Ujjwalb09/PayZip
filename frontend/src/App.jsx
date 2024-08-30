@@ -6,6 +6,7 @@ import SendMoney from "./components/SendMoney";
 import OtpInputWithValidation from "./components/OtpValidation";
 import LandingPage from "./components/LandingPage";
 import Edit from "./components/Edit";
+import ContactUs from "./components/ContactUs";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/dashboard/send" element={<SendMoney />} />
           <Route path="/dashboard/edit" element={<Edit />} />
         </Route>
+        <Route path="/contactUs" element={<ContactUs />} />
       </Routes>
     </div>
   );
