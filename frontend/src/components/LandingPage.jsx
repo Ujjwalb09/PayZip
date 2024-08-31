@@ -40,7 +40,7 @@ const LandingPage = () => {
   }, [animationComplete]);
 
   return (
-    <div className="w-screen h-screen overflow-hidden">
+    <div className="w-screen h-screen">
       <motion.div
         initial="hidden"
         animate="visible"
@@ -50,14 +50,14 @@ const LandingPage = () => {
         <LandingPageTopNav btnText={"Sign In"} />
       </motion.div>
 
-      <div className="w-screen h-screen flex mt-[5.1rem]">
+      <div className="w-screen h-[90vh] flex mt-[5.1rem]">
         <motion.div
           initial="hidden"
           animate="visible"
           variants={leftPanelVariants}
-          className="LEFT PANEL flex items-center justify-center w-[40%] h-screen bg-white"
+          className="LEFT PANEL flex items-center justify-center w-[40%] h-full bg-white"
         >
-          <div className="WELCOME TEXT flex flex-col text-center gap-[2.2rem] mb-[8rem] w-[30rem] h-[30rem] items-center justify-center">
+          <div className="WELCOME TEXT flex flex-col text-center gap-[2.2rem] mb-[4rem] items-center justify-center ml-[4rem]">
             <div className="relative font-kalam font-bold flex flex-col gap-3">
               <motion.h1
                 initial="hidden"
@@ -123,10 +123,10 @@ const LandingPage = () => {
           initial="hidden"
           animate="visible"
           variants={rightPanelVariants}
-          className="IMAGE RIGHT PANEL flex justify-center items-center w-[60%] h-screen bg-white"
+          className="IMAGE RIGHT PANEL flex justify-center items-center w-[60%] h-full bg-white"
         >
           <img
-            className="h-[68%] mb-[12rem] mr-[6rem]"
+            className="h-[75%] mb-[6rem] mr-[2rem]"
             src="../assets/landing-image1.jpg"
             alt=""
           />

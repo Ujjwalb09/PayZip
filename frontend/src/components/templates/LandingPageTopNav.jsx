@@ -4,9 +4,6 @@ import { Link } from "react-router-dom";
 
 const LandingPageTopNav = ({ btnText }) => {
   const [loading, setLoading] = useState(false);
-  const [home, setHome] = useState(false);
-  const [contactUs, setContactUs] = useState(false);
-  const [about, setAbout] = useState(false);
   const navigate = useNavigate();
 
   const { pathname } = useLocation();
