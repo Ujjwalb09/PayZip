@@ -1,10 +1,16 @@
 import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const LandingPageTopNav = ({ btnText }) => {
   const [loading, setLoading] = useState(false);
+  const [home, setHome] = useState(false);
+  const [contactUs, setContactUs] = useState(false);
+  const [about, setAbout] = useState(false);
   const navigate = useNavigate();
+
+  const { pathname } = useLocation();
+  console.log(typeof pathname.split("/")[1]);
 
   return (
     <div className="TOPNAV w-full h-[9vh] flex justify-between border-gray-200 items-center relative z-50 bg-white shadow-md">
@@ -16,9 +22,38 @@ const LandingPageTopNav = ({ btnText }) => {
 
       <div className="flex justify-between items-center w-[44%]">
         <div className="flex gap-[7rem] font-semibold font-raleway">
-          <Link to={"/"}>Home</Link>
-          <Link to={"/contactUs"}>Contact Us</Link>
-          <p>About</p>
+          <NavLink
+            className={(e) => {
+              return [
+                e.isActive ? "font-bold scale-110" : "",
+                "hover:scale-105",
+              ].join(" ");
+            }}
+            to={"/"}
+          >
+            Home
+          </NavLink>
+          <NavLink
+            className={(e) => {
+              return [
+                e.isActive ? "font-bold scale-110" : "",
+                "hover:scale-105",
+              ].join(" ");
+            }}
+            to={"/contactUs"}
+          >
+            Contact Us
+          </NavLink>
+          <NavLink
+          // className={(e) => {
+          //   return [
+          //     e.isActive ? "font-bold scale-110" : "",
+          //     "hover:scale-105",
+          //   ].join(" ");
+          // }}
+          >
+            About
+          </NavLink>
         </div>
         <button
           onClick={() => {

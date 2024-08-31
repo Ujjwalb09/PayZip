@@ -27,7 +27,7 @@ const LandingPage = () => {
     hidden: { opacity: 0 },
     visible: (i) => ({
       opacity: 1,
-      transition: { delay: i * 0.3, duration: 0.8, ease: "easeOut" },
+      transition: { delay: i * 0.3, duration: 0.5, ease: "easeOut" },
     }),
   };
 
