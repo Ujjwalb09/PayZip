@@ -2,10 +2,26 @@ import React, { useRef, useState } from "react";
 import LandingPageTopNav from "./templates/LandingPageTopNav";
 import emailjs from "@emailjs/browser";
 import { toast } from "react-toastify";
+import { motion } from "framer-motion";
 
 const ContactUs = () => {
   const form = useRef();
   const [loading, setLoading] = useState(false);
+
+  const leftPanelVariants = {
+    hidden: { x: "-100%" },
+    visible: { x: 0, transition: { duration: 0.8, ease: "easeOut" } },
+  };
+
+  const rightPanelVariants = {
+    hidden: { x: "100%" },
+    visible: { x: 0, transition: { duration: 0.8, ease: "easeOut" } },
+  };
+
+  const topNavVariants = {
+    hidden: { y: "-100%" },
+    visible: { y: 0, transition: { duration: 0.8, ease: "easeOut" } },
+  };
 
   const sendEmail = (e) => {
     e.preventDefault();
@@ -28,10 +44,22 @@ const ContactUs = () => {
   };
   return (
     <div className="w-screen h-screen">
-      <LandingPageTopNav btnText={"Sign In"} />
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={topNavVariants}
+        className="fixed w-full"
+      >
+        <LandingPageTopNav btnText={"Sign In"} />
+      </motion.div>
 
-      <div className="w-screen h-[91vh] flex">
-        <div className="LEFT w-[45%] h-full flex items-center justify-center">
+      <div className="w-screen h-[91vh] flex mt-[4.9rem]">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={leftPanelVariants}
+          className="LEFT w-[45%] h-full flex items-center justify-center"
+        >
           <div class="max-w-md w-full rounded-lg shadow-2xl border p-6 mb-[3rem] mr-[2rem]">
             <h2 class="text-5xl font-quicksand font-bold mb-6 text-black">
               Contact Us
@@ -107,14 +135,19 @@ const ContactUs = () => {
               </div>
             </form>
           </div>
-        </div>
-        <div className="RIGHT flex justify-center items-center w-[55%] h-full">
+        </motion.div>
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={rightPanelVariants}
+          className="RIGHT flex justify-center items-center w-[55%] h-full"
+        >
           <img
             className="h-[80%] mb-[10rem] mr-[6rem]"
             src="../../assets/contactUs.jpg"
             alt=""
           />
-        </div>
+        </motion.div>
       </div>
     </div>
   );
