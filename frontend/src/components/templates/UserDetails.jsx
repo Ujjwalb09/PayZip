@@ -25,7 +25,7 @@ const UserDetails = () => {
     setTimeout(async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8080/api/v1/account/balance",
+          "payments-app-backend-alpha.vercel.app/api/v1/account/balance",
           {
             headers: {
               authorization: token,

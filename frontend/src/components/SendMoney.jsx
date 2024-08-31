@@ -33,7 +33,7 @@ const SendMoney = () => {
     setTimeout(async () => {
       try {
         const response = await axios.post(
-          "http://localhost:8080/api/v1/account/transfer",
+          "payments-app-backend-alpha.vercel.app/api/v1/account/transfer",
           {
             to: transferDetail.payeeId,
             amount: transferAmount,

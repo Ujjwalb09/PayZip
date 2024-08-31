@@ -94,7 +94,7 @@ function OtpInputWithValidation({ numberOfDigits = 6 }) {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/v1/otp/send-otp",
+        "payments-app-backend-alpha.vercel.app/api/v1/otp/send-otp",
         {
           username: userDetailObj.email,
           password: userDetailObj.password,

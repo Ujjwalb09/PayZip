@@ -38,7 +38,7 @@ const Signup = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/v1/otp/send-otp",
+        "payments-app-backend-alpha.vercel.app/api/v1/otp/send-otp",
         {
           username: email,
           password,
