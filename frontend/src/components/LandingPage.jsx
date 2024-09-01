@@ -40,7 +40,7 @@ const LandingPage = () => {
   }, [animationComplete]);
 
   return (
-    <div className="w-screen h-screen">
+    <div className="w-screen h-screen overflow-hidden">
       <motion.div
         initial="hidden"
         animate="visible"
