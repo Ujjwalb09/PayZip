@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { User, OTP } = require("../db");
+const { User, OTP } = require("../db/db");
 const otpGenerator = require("otp-generator");
 const zod = require("zod");
 const emailSchema = zod.string().email();

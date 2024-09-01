@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const mailSender = require("./utils/mailSender");
+const mailSender = require("../utils/mailSender");
 
 const dbURI =
   process.env.MONGODB_URI ||

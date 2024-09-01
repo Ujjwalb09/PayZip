@@ -2,12 +2,12 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../config");
-const { User, Account } = require("../db");
+const { User, Account } = require("../db/db");
 const router = express.Router();
 const authMiddleware = require("../middlewares/middleware");
 const zod = require("zod");
 const passSchema = zod.string().min(6);
-const { OTP } = require("../db");
+const { OTP } = require("../db/db");
 
 //user Signup
 router.post("/signup", async (req, res) => {
