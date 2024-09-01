@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import userAxios from "../../utils/axios";
+import userAxios, { accountAxios } from "../../utils/axios";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -9,8 +9,6 @@ const UserDetails = () => {
   const [data, setData] = useState("");
 
   const user = useSelector((state) => state.user.info);
-  console.log(user);
-  console.log(data);
   const [balance, setBalance] = useState("");
   const [loading, setLoading] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
@@ -24,14 +22,11 @@ const UserDetails = () => {
 
     setTimeout(async () => {
       try {
-        const response = await axios.get(
-          "payments-app-backend-alpha.vercel.app/api/v1/account/balance",
-          {
-            headers: {
-              authorization: token,
-            },
-          }
-        );
+        const response = await accountAxios.get("/balance", {
+          headers: {
+            authorization: token,
+          },
+        });
 
         setBalance(response.data.balance);
         setLoading(false);

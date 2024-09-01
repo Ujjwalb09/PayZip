@@ -3,6 +3,7 @@ import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { toast, Flip } from "react-toastify";
+import { accountAxios } from "../utils/axios";
 
 const SendMoney = () => {
   const navigate = useNavigate();
@@ -32,8 +33,8 @@ const SendMoney = () => {
 
     setTimeout(async () => {
       try {
-        const response = await axios.post(
-          "payments-app-backend-alpha.vercel.app/api/v1/account/transfer",
+        const response = await accountAxios.post(
+          "/transfer",
           {
             to: transferDetail.payeeId,
             amount: transferAmount,
@@ -48,7 +49,6 @@ const SendMoney = () => {
         setTransferSuccessful(true);
         setLoading(false);
       } catch (error) {
-        console.log(error);
         toast.error(error.response.data.message, {
           position: "bottom-center",
         });

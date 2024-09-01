@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import LandingPageTopNav from "./templates/LandingPageTopNav";
 import { motion } from "framer-motion";
+import { otpAxios } from "../utils/axios";
 
 const Signup = () => {
   const [firstName, setFirstName] = useState("");
@@ -37,13 +38,10 @@ const Signup = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post(
-        "payments-app-backend-alpha.vercel.app/api/v1/otp/send-otp",
-        {
-          username: email,
-          password,
-        }
-      );
+      const response = await otpAxios.post("/send-otp", {
+        username: email,
+        password,
+      });
       toast.success(response.data.message);
       navigate("/signup/send-otp");
     } catch (error) {

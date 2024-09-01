@@ -8,7 +8,6 @@ const Topnav = ({ user }) => {
   const buttonContainerRef = useRef();
   const logoutBtnContainer = useRef();
   const navigate = useNavigate();
-  console.log(user);
 
   const color = () => {
     return `rgba(${(Math.random() * 255).toFixed()}, ${(

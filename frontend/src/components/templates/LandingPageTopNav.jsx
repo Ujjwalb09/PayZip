@@ -6,9 +6,6 @@ const LandingPageTopNav = ({ btnText }) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const { pathname } = useLocation();
-  console.log(typeof pathname.split("/")[1]);
-
   return (
     <div className="TOPNAV w-full h-[9vh] flex justify-between border-gray-200 items-center relative z-50 bg-white shadow-md">
       <div className="pl-[6rem] pb-1">

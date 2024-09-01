@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { toast } from "react-toastify";
-import userAxios from "../utils/axios";
+import userAxios, { otpAxios } from "../utils/axios";
 import axios from "axios";
 import { loadUser } from "../store/reducers/userSlice";
 import { useDispatch } from "react-redux";
@@ -93,13 +93,10 @@ function OtpInputWithValidation({ numberOfDigits = 6 }) {
   const resendOTP = async () => {
     setLoading(true);
     try {
-      const response = await axios.post(
-        "payments-app-backend-alpha.vercel.app/api/v1/otp/send-otp",
-        {
-          username: userDetailObj.email,
-          password: userDetailObj.password,
-        }
-      );
+      const response = await otpAxios.post("/send-otp", {
+        username: userDetailObj.email,
+        password: userDetailObj.password,
+      });
       toast.success(response.data.message);
       setTimeLeft(120);
     } catch (error) {

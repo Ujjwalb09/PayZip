@@ -27,7 +27,6 @@ const Signin = () => {
           password,
         })
         .then((response) => {
-          console.log(response.data);
           localStorage.setItem(email, response.data.token);
           dispatch(
             loadUser({
@@ -41,7 +40,9 @@ const Signin = () => {
           setLoading(false);
         })
         .catch((error) => {
-          toast.error(error.response.data.message);
+          error.response
+            ? toast.error(error.response.data.message)
+            : console.log(error);
           setLoading(false);
         });
     }, 1000);

@@ -2,9 +2,14 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const mailSender = require("./utils/mailSender");
 
-mongoose.connect(
-  "mongodb+srv://ujjwalbhatt09:Bhatt_2021@cluster0.e1a378i.mongodb.net/payments_app"
-);
+const dbURI =
+  process.env.MONGODB_URI ||
+  "mongodb+srv://ujjwalbhatt09:Bhatt_2021@cluster0.e1a378i.mongodb.net/payments_app";
+
+mongoose
+  .connect(dbURI, {})
+  .then(() => console.log("Database connected successfully"))
+  .catch((err) => console.error("Database connection error:", err));
 
 const UserSchema = new mongoose.Schema({
   firstName: {
