@@ -6,6 +6,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { loadUser } from "../store/reducers/userSlice";
 import LandingPageTopNav from "./templates/LandingPageTopNav";
 import { motion } from "framer-motion";
+import ReactFloaterJs from "react-floaterjs";
+import TypeIt from "typeit-react";
 
 const Signin = () => {
   const [visibility, setVisibility] = useState(false);
@@ -69,28 +71,43 @@ const Signin = () => {
         initial="hidden"
         animate="visible"
         variants={topNavVariants}
-        className="fixed w-full"
+        className="fixed w-full z-40 md:relative"
       >
         <LandingPageTopNav btnText={"Sign Up"} />
       </motion.div>
-      <div className="w-full h-screen bg-white flex mt-[4.2rem]">
+
+      {/* LEFT AND RIGHT PANEL CONTAINER */}
+      <div className="w-full h-screen bg-white flex mt-[4.2rem] md:flex md:flex-col md:mt-0 lg:flex-row">
+        {/* LEFT PANEL */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={leftPanelVariants}
-          className="LEFT PANEL flex items-center justify-center min-h-screen w-[50%]"
+          className="LEFT PANEL flex items-center justify-center h-screen md:h-[60%] w-full lg:min-h-screen lg:w-[50%]"
         >
-          <div className="SIGN IN CARD bg-white rounded-lg shadow-2xl border p-6 w-[39%] mb-[7rem]">
-            <h2 className="text-3xl font-bold mb-2 text-center">Sign In</h2>
-            <p className="text-gray-500 text-center mb-6">
+          {/* SIGN IN FORM CARD */}
+          <div className="SIGN IN CARD bg-white rounded-lg shadow-2xl border p-6 w-[90%] mb-[5.5rem] md:mb-2 md:w-[42%] md:h-[29rem] md:mt-[1rem] lg:mb-[7rem] lg:h-[27rem] lg:w-[62%] xl:w-[60%]">
+            <h2 className="text-3xl font-bold mb-2 text-center md:text-4xl md:mb-5 md:font-poppins lg:text-3xl lg:mb-2">
+              <TypeIt
+                options={{
+                  strings: [`Sign In`],
+                  speed: 50,
+                  lifeLike: true,
+                  cursorSpeed: 1000,
+                  waitUntilVisible: true,
+                  cursor: false,
+                }}
+              />
+            </h2>
+            <p className="text-gray-500 text-center mb-6 md:text-base lg:text-base">
               Enter your credentials to access your account
             </p>
 
             <form onSubmit={signIn}>
-              <div className="mb-4">
+              <div className="mb-4 md:mb-5 lg:mb-4">
                 <label
                   for="email"
-                  className="block text-sm font-bold text-gray-700 mb-2"
+                  className="block text-sm md:text-md font-bold text-gray-700 mb-3 lg:text-sm"
                 >
                   Email
                 </label>
@@ -101,14 +118,14 @@ const Signin = () => {
                   id="email"
                   name="email"
                   placeholder="johndoe@example.com"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-black"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-black md:py-2 lg:py-2"
                 />
               </div>
 
-              <div className="mb-6 relative">
+              <div className="mb-6 md:mb-6 lg:mb-6 relative">
                 <label
                   htmlFor="password"
-                  className="block text-sm font-bold text-gray-700 mb-2"
+                  className="block text-sm font-bold text-gray-700 mb-2 md:text-md lg:text-sm"
                 >
                   Password
                 </label>
@@ -118,7 +135,7 @@ const Signin = () => {
                   id="password"
                   name="password"
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-black"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-black lg:py-2"
                 />
                 <i
                   onClick={() => setVisibility(!visibility)}
@@ -126,10 +143,10 @@ const Signin = () => {
                   onMouseLeave={() => setShowTooltip(false)}
                   className={`${
                     visibility ? "ri-eye-line" : "ri-eye-close-line"
-                  } absolute right-2 top-9 cursor-pointer`}
+                  } absolute right-2 top-9 lg:text-base lg:top-9 cursor-pointer`}
                 >
                   {showToolTip && (
-                    <span className="absolute right-0 top-0 transform -translate-y-full bg-gray-800 text-white text-xs rounded-md py-1 px-2 whitespace-nowrap transition duration-1000 delay-1000 ease-in-out">
+                    <span className="absolute right-0 top-0 transform -translate-y-full bg-gray-800 text-white text-xs rounded-md py-1 px-2 whitespace-nowrap transition duration-1000 delay-1000 ease-in-out lg:text-xs lg:py-1 lg:px-2">
                       {visibility ? "Hide Password" : "Show Password"}
                     </span>
                   )}
@@ -138,7 +155,7 @@ const Signin = () => {
 
               <button
                 type="submit"
-                className="w-full bg-black text-white py-2 px-4 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 font-raleway text-lg"
+                className="w-full bg-black text-white py-2 px-4 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 font-raleway text-lg  lg:text-lg lg:py-2"
               >
                 {loading ? (
                   <img
@@ -152,7 +169,7 @@ const Signin = () => {
               </button>
             </form>
 
-            <p className="mt-4 text-center text-sm">
+            <p className="mt-4 lg:text-sm text-center text-sm lg:mt-3">
               Don't have an account?
               <Link to="/signup" className="ml-1 underline">
                 Sign Up
@@ -161,13 +178,20 @@ const Signin = () => {
           </div>
         </motion.div>
 
+        {/* RIGHT PANEL */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={rightPanelVariants}
-          className="RIGHT PANEL w-[50%] bg-white"
+          className="RIGHT PANEL hidden md:flex w-full bg-white items-center justify-center md:h-[30%] lg:h-full lg:w-[50%]"
         >
-          <img className="h-[85%]" src="../assets/signIn.jpg" alt="" />
+          <ReactFloaterJs>
+            <img
+              className="h-[300px] md:h-[200px] md:mb-[0rem] lg:h-[85%] lg:mb-[6rem]"
+              src="../assets/signIn.jpg"
+              alt=""
+            />
+          </ReactFloaterJs>
         </motion.div>
       </div>
     </div>
