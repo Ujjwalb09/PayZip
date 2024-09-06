@@ -83,11 +83,11 @@ const Signin = () => {
           initial="hidden"
           animate="visible"
           variants={leftPanelVariants}
-          className="LEFT PANEL flex items-center justify-center h-screen md:h-[60%] w-full lg:min-h-screen lg:w-[50%]"
+          className="LEFT PANEL flex items-center justify-center h-screen md:h-[60%] w-full lg:min-h-screen lg:w-[50%] md-h700:h-full"
         >
           {/* SIGN IN FORM CARD */}
-          <div className="SIGN IN CARD bg-white rounded-lg shadow-2xl border p-6 w-[90%] mb-[5.5rem] md:mb-2 md:w-[42%] md:h-[29rem] md:mt-[1rem] lg:mb-[7rem] lg:h-[27rem] lg:w-[62%] xl:w-[60%]">
-            <h2 className="text-3xl font-bold mb-2 text-center md:text-4xl md:mb-5 md:font-poppins lg:text-3xl lg:mb-2">
+          <div className="SIGN IN CARD bg-white rounded-lg shadow-2xl border p-6 w-[90%] mb-[5.5rem] md:mb-2 md:w-[42%] md:h-[29rem] md:mt-[1rem] lg:mb-[7rem] lg:h-[27rem] lg:w-[62%] xl:w-[50%] 2xl:w-[39%] 2xl:mb-[9rem] 2xl:ml-[4rem] md-h700:mb-[5rem] sm:w-[50%] xl-h700:h-[25rem] xl-h700:mt-[4rem]">
+            <h2 className="text-3xl font-bold mb-2 text-center md:text-4xl md:mb-5 md:font-poppins lg:text-3xl lg:mb-2 2xl:mb-4">
               <TypeIt
                 options={{
                   strings: [`Sign In`],
@@ -99,7 +99,7 @@ const Signin = () => {
                 }}
               />
             </h2>
-            <p className="text-gray-500 text-center mb-6 md:text-base lg:text-base">
+            <p className="text-gray-500 text-center mb-6 md:text-base lg:text-base xl-h700:mb-3 xl-h700:text-sm 2xl:mb-3">
               Enter your credentials to access your account
             </p>
 
@@ -183,11 +183,11 @@ const Signin = () => {
           initial="hidden"
           animate="visible"
           variants={rightPanelVariants}
-          className="RIGHT PANEL hidden md:flex w-full bg-white items-center justify-center md:h-[30%] lg:h-full lg:w-[50%]"
+          className="RIGHT PANEL hidden md:flex w-full bg-white items-center justify-center md:h-[30%] lg:h-full lg:w-[50%] md-h700:hidden"
         >
           <ReactFloaterJs>
             <img
-              className="h-[300px] md:h-[200px] md:mb-[0rem] lg:h-[85%] lg:mb-[6rem]"
+              className="h-[300px] md:h-[200px] md:mb-[0rem] lg:h-[85%] lg:mb-[6rem] 2xl:h-[42rem] 2xl:mr-[4rem] 2xl:mb-[9rem] xl-h700:h-[32rem] xl-h700:mt-[3rem]"
               src="../assets/signIn.jpg"
               alt=""
             />

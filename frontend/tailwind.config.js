@@ -22,13 +22,25 @@ export default {
         poppins: ["Poppins", "sans-serif"],
       },
       screens: {
-        // Custom breakpoint for width >= 640px and height >= 500px
-        "lg-h700": { raw: "(min-width: 1024px) and (max-height: 700px)" },
         belowSm: { raw: "(max-width: 640px)" },
-        "lg-h600": { raw: "(min-width: 1024px) and (max-height: 600px)" },
+        "sm-h700": {
+          raw: "(min-width: 640px) and (max-width: 767px) and (max-height: 700px)",
+        },
+        "md-h700": {
+          raw: "(min-width: 768px) and (max-width: 1023px) and (max-height: 700px)",
+        },
+        "lg-h700": {
+          raw: "(min-width: 1024px) and (max-width: 1279px) and (max-height: 700px)",
+        },
+        "md-lg-minh800": {
+          raw: "(min-width: 768px) and (max-width: 1023px) and (min-height: 800px)",
+        },
+        "lg-xl-minh800": {
+          raw: "(min-width: 1024px) and (max-width: 1279px) and (min-height: 800px)",
+        },
+        "xl-h700": { raw: "(min-width: 1280px) and (max-height: 700px)" },
+        // "lg-h600": { raw: "(min-width: 1024px) and (max-height: 600px)" },
         "xl-minh700": { raw: "(min-width: 1280px) and (min-height: 700px)" },
-        "md-h700": { raw: "(min-width: 768px) and (max-height: 700px)" },
-        "sm-h700": { raw: "(min-width: 640px) and (max-height: 700px)" },
       },
     },
   },

@@ -47,7 +47,7 @@ const LandingPageTopNav = ({ btnText }) => {
       <div className="pb-1">
         <Link to={"/"}>
           <img
-            className="h-[70px] sm-h700:h-[67px] sm:h-[80px] lg-h700:h-[63px] md:h-[80px] lg-h600:h-[60px] xl-minh700:h-[78px] md-h700:h-[70px] "
+            className="h-[70px]  sm-h700:h-[60px] sm:h-[80px] lg-h700:h-[63px] md:h-[3.9rem] xl-minh700:h-[78px] md-h700:h-[3.9rem] md-lg-minh800:h-[5rem] lg-xl-minh800:h-[5rem]"
             src="../../assets/payzip.png"
             alt=""
           />
@@ -61,7 +61,7 @@ const LandingPageTopNav = ({ btnText }) => {
         variants={topNavVariants}
         className={`${
           isVisible ? "flex" : "hidden"
-        } lg:flex flex-col lg:flex-row items-center justify-center border-b shadow-lg gap-[3rem] font-semibold font-raleway w-full mt-0 lg:mt-0 sm:text-[20px] absolute lg:static bg-white lg:bg-transparent min-h-[50vh] left-0 top-[100%] lg:min-h-[10vh] lg:gap-24 lg:w-auto z-40 transition-all duration-300 lg:text-[16px] lg:border-b-0 lg:shadow-none md:gap-[5rem] md:text-[25px]`}
+        } lg:flex flex-col lg:flex-row items-center justify-center border-b shadow-lg gap-[3rem] font-semibold font-raleway w-full mt-0 lg:mt-0 sm:text-[20px] absolute lg:static bg-white lg:bg-transparent min-h-[50vh] left-0 top-[100%] lg:min-h-[10vh] lg:gap-24 lg:w-auto z-40 transition-all duration-300 lg:text-[16px] lg:border-b-0 lg:shadow-none md:gap-[3rem] md:text-[25px] xl:text-[17px] md-h700:gap-[2rem]`}
       >
         <li>
           <NavLink
