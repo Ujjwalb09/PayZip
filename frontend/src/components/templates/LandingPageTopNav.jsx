@@ -47,7 +47,7 @@ const LandingPageTopNav = ({ btnText }) => {
       <div className="pb-1">
         <Link to={"/"}>
           <img
-            className="h-[70px]  sm-h700:h-[60px] sm:h-[80px] lg-h700:h-[63px] md:h-[3.9rem] xl-minh700:h-[78px] md-h700:h-[3.8rem] md-lg-minh800:h-[5rem] lg-xl-minh800:h-[5rem] xl-h700:h-[60px] bsm-h600:h-[3.7rem]"
+            className="h-[70px]  sm-h700:h-[60px] sm:h-[80px] lg-h700:h-[63px] md:h-[3.9rem] xl-minh700:h-[78px] md-h700:h-[3.7rem] md-lg-minh800:h-[5rem] lg-xl-minh800:h-[5rem] xl-h700:h-[60px] bsm-h600:h-[3.7rem]"
             src="../../assets/payzip.png"
             alt=""
           />
