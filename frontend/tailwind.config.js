@@ -23,6 +23,7 @@ export default {
       },
       screens: {
         belowSm: { raw: "(max-width: 640px)" },
+        "bsm-h600": { raw: "(max-width: 640px) and (max-height: 600px)" },
         "sm-h700": {
           raw: "(min-width: 640px) and (max-width: 767px) and (max-height: 700px)",
         },

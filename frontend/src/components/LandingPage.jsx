@@ -122,7 +122,7 @@ const LandingPage = () => {
         >
           <ReactFloaterJs>
             <img
-              className="h-[260px] 
+              className="h-[230px] 
              sm:h-[400px] 
              sm-h700:h-[260px] 
              md-h700:h-[300px] 
@@ -134,7 +134,8 @@ const LandingPage = () => {
              xl-h700:h-[440px] 
              xl-minh700:mb-[6rem] 
              xl-minh700:mr-12 
-             xl-minh700:h-[600px]"
+             xl-minh700:h-[600px]
+             bsm-h600:h-[12rem]"
               src="../assets/landing-image1.jpg"
               alt=""
             />
