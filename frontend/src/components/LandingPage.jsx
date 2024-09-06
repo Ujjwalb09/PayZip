@@ -68,7 +68,7 @@ const LandingPage = () => {
                     strings: [
                       `Welcome<br /><span class="text-4xl sm:text-5xl md:text-5xl lg:text-3xl xl:text-[3.2rem]">To</span><br /> Payzip`,
                     ],
-                    speed: 140,
+                    speed: 100,
                     lifeLike: false,
                     cursorSpeed: 1000,
                     waitUntilVisible: true,

@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useState } from "react";
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { toast } from "react-toastify";
 import userAxios, { otpAxios } from "../utils/axios";
-import axios from "axios";
 import { loadUser } from "../store/reducers/userSlice";
 import { useDispatch } from "react-redux";
 
@@ -54,6 +53,25 @@ function OtpInputWithValidation({ numberOfDigits = 6 }) {
     }
   }
 
+  // Helper function to display a mobile-friendly toast
+  const showMobileToast = (message, type = "success") => {
+    const isMobile = window.innerWidth < 640;
+    console.log(window.innerWidth);
+    const options = {
+      position: isMobile ? "bottom-center" : "top-right",
+      style: {
+        width: isMobile ? "60%" : "auto",
+        fontSize: isMobile ? "14px" : "16px",
+      },
+    };
+
+    if (type === "success") {
+      toast.success(message, options);
+    } else if (type === "error") {
+      toast.error(message, options);
+    }
+  };
+
   const signUp = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -74,7 +92,7 @@ function OtpInputWithValidation({ numberOfDigits = 6 }) {
           otp: OTP,
         });
         localStorage.setItem(userDetailObj.email, response.data.token);
-        toast.success(response.data.message);
+        showMobileToast(response.data.message); // Call mobile-friendly toast
         dispatch(
           loadUser({
             firstName: userDetailObj.firstName,
@@ -85,6 +103,7 @@ function OtpInputWithValidation({ numberOfDigits = 6 }) {
         navigate("/dashboard");
       } catch (error) {
         setOtpError(error.response.data.message);
+        showMobileToast(error.response.data.message, "error");
         setLoading(false);
       }
     }, 2000);
@@ -97,27 +116,28 @@ function OtpInputWithValidation({ numberOfDigits = 6 }) {
         username: userDetailObj.email,
         password: userDetailObj.password,
       });
-      toast.success(response.data.message);
+      showMobileToast(response.data.message); // Call mobile-friendly toast
       setTimeLeft(120);
     } catch (error) {
       console.log(error);
+      showMobileToast("Failed to resend OTP", "error");
     }
     setLoading(false);
   };
 
   return (
     <form onSubmit={signUp}>
-      <div className="bg-[rgba(0,0,0,.8)] absolute z-[100] top-0 left-0 w-screen h-screen flex flex-col items-center justify-center">
+      <div className="bg-[rgba(0,0,0,.8)] absolute z-[100] top-0 left-0 w-full h-screen flex flex-col items-center justify-center">
         <Link
           onClick={() => navigate(-1)}
-          className="ri-close-line mr-5 absolute text-2xl text-white left-[20%] top-[30%] hover:scale-110"
+          className="ri-close-line mr-1 absolute text-lg sm:text-2xl text-white left-[72%] top-[10%] sm:left-[75%] sm:top-[15%] hover:scale-110"
         >
           Close
         </Link>{" "}
-        <p className="text-2xl font-medium text-white mt-12">
+        <p className="text-lg sm:text-2xl lg:text-3xl font-medium text-white">
           Please enter the OTP sent to your email
         </p>
-        <p className="text-base text-white mt-6 mb-4">
+        <p className="text-base sm:text-xl lg:text-2xl text-white mt-3 mb-4">
           One Time Password (OTP)
         </p>
         <div className="flex items-center gap-4">
@@ -133,7 +153,7 @@ function OtpInputWithValidation({ numberOfDigits = 6 }) {
               }}
               onKeyUp={(e) => handleBackspaceAndEnter(e, index)}
               ref={(reference) => (otpBoxReference.current[index] = reference)}
-              className={`border w-20 h-auto text-white p-3 rounded-md block bg-black focus:border-2 focus:outline-none appearance-none`}
+              className={`border w-10 sm:w-[4.5rem] lg:w-[5rem] h-auto text-white p-2 rounded-md block bg-black focus:border-2 focus:outline-none appearance-none`}
             />
           ))}
         </div>
