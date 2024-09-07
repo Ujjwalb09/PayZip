@@ -93,7 +93,7 @@ const LandingPage = () => {
                     setLoading(true);
                     setTimeout(() => {
                       navigate("/signup");
-                    }, 2000);
+                    }, 1000);
                   }}
                   type="submit"
                   className="w-[10rem] sm:w-[9rem] sm:text-xl bg-black text-white py-[0.63rem] rounded-3xl hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:scale-105 flex justify-center gap-2 items-center font-caveat text-xl lg:text-md "
