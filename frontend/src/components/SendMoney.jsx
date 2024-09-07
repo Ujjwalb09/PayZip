@@ -82,46 +82,47 @@ const SendMoney = () => {
 
   return (
     transferDetail && (
-      <div className="bg-[rgba(0,0,0,.8)] absolute z-[100] top-[-4.9rem] left-0 w-screen h-screen flex flex-col items-center justify-center">
+      <div className="bg-[rgba(0,0,0,.8)] absolute z-[100] top-[-6rem] left-0 w-screen h-screen flex flex-col items-center justify-center 2xl:top-[-5.4rem]">
         <Link
           onClick={() => navigate(-1)}
-          className="ri-close-line mr-5 absolute text-2xl text-white left-[20%] top-[20%] hover:scale-110"
+          className="ri-close-line mr-5 absolute text-xl text-white left-[70%] top-[12%] hover:scale-110"
         >
           Close
         </Link>{" "}
-        <div className="bg-white w-[29rem] h-[24rem]  rounded-lg">
+        <div className="bg-white w-[20rem] h-[21rem] 2xl:w-[30rem] 2xl:h-[30rem] rounded-lg">
           {!transferSuccesful ? (
             <div className="flex flex-col gap-[3rem]">
-              <div className="flex flex-col items-center justify-center h-[7rem] text-4xl font-bold pt-[5rem] font-quicksand mb-4">
+              <div className="flex flex-col items-center justify-center h-[6rem] text-3xl 2xl:h-[10rem] 2xl:text-5xl font-bold pt-[4rem] font-quicksand mb-0">
                 <h1>Send Money</h1>
                 <img
-                  className="h-[8rem]"
+                  className="h-[7rem] 2xl:h-[10rem]"
                   src="../assets/sendMoney2.jpg"
                   alt=""
                 />
               </div>
 
-              <div className="px-10 py-1">
-                <div className="flex gap-3 items-center mb-1">
-                  <span className="flex items-center justify-center w-11 h-11 rounded-full bg-[#21C55D] text-xl font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-400 font-quicksand">
+              <div className="px-10 py-0 2xl:py-10">
+                <div className="flex gap-3 items-center mb-1 2xl:mb-3">
+                  <span className="flex items-center justify-center w-11 h-11 rounded-full bg-[#21C55D] text-xl font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-400 font-quicksand 2xl:text-2xl">
                     {transferDetail.payeeFirstName.split("")[0]}
                   </span>
-                  <h1 className="text-[1.40rem] font-bold  font-quicksand">
+                  <h1 className="text-[1.40rem] 2xl:text-[2rem] font-bold  font-quicksand">
                     {transferDetail.payeeFirstName}{" "}
                     {transferDetail.payeeLastName}
                   </h1>
                 </div>
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col gap-1 2xl:gap-2">
                   <h3 className="">Amount (in Rs)</h3>
                   <input
+                    type="number"
+                    inputMode="numeric"
                     onChange={(e) => setTransferAmount(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black mb-2"
-                    type="text"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black mb-1"
                     placeholder="Enter Amount"
                   />
                   <button
                     onClick={transfer}
-                    className="bg-[#21C55D] text-lg py-2 rounded-md text-white font-bold font-quicksand mt-1 hover:scale-105 hover:bg-[#19a34c] duration-150"
+                    className="bg-[#21C55D] text-lg py-2 rounded-md text-white font-bold font-quicksand mt-2 hover:scale-105 hover:bg-[#19a34c] duration-150"
                   >
                     {loading ? (
                       <img

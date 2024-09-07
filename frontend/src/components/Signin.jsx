@@ -8,6 +8,7 @@ import LandingPageTopNav from "./templates/LandingPageTopNav";
 import { motion } from "framer-motion";
 import ReactFloaterJs from "react-floaterjs";
 import TypeIt from "typeit-react";
+import { Eye, EyeOff } from "lucide-react";
 
 const Signin = () => {
   const [visibility, setVisibility] = useState(false);
@@ -137,20 +138,24 @@ const Signin = () => {
                   required
                   className="w-full px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-black lg:py-2"
                 />
-                <i
+                <button
+                  type="button"
                   onClick={() => setVisibility(!visibility)}
                   onMouseEnter={() => setShowTooltip(true)}
                   onMouseLeave={() => setShowTooltip(false)}
-                  className={`${
-                    visibility ? "ri-eye-line" : "ri-eye-close-line"
-                  } absolute right-2 top-9 lg:text-base lg:top-9 cursor-pointer`}
+                  className="absolute inset-y-0 top-6 right-0 flex items-center pr-3"
                 >
-                  {showToolTip && (
-                    <span className="absolute right-0 top-0 transform -translate-y-full bg-gray-800 text-white text-xs rounded-md py-1 px-2 whitespace-nowrap transition duration-1000 delay-1000 ease-in-out lg:text-xs lg:py-1 lg:px-2">
-                      {visibility ? "Hide Password" : "Show Password"}
-                    </span>
+                  {visibility ? (
+                    <EyeOff className="h-5 w-5 text-gray-400" />
+                  ) : (
+                    <Eye className="h-5 w-5 text-gray-400" />
                   )}
-                </i>
+                </button>
+                {showToolTip && (
+                  <span className="absolute right-0 top-0 transform -translate-y-full bg-gray-800 text-white text-xs rounded-md py-1 px-2 whitespace-nowrap transition duration-1000 delay-1000 ease-in-out lg:text-xs lg:py-1 lg:px-2">
+                    {visibility ? "Hide Password" : "Show Password"}
+                  </span>
+                )}
               </div>
 
               <button

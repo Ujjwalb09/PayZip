@@ -43,11 +43,11 @@ const LandingPageTopNav = ({ btnText }) => {
   }, []);
 
   return (
-    <nav className="TOPNAV w-full mx-auto h-[10vh] flex justify-between border-gray-200 items-center relative z-50 bg-[#FCFCFC] shadow-md px-4 lg:px-10 lg-h700:h-[11vh] xl-minh700:h-[9vh] xl-minh700:px-[5rem]">
-      <div className="pb-1">
+    <nav className="TOPNAV w-full mx-auto h-[12vh] flex justify-between border-gray-200 items-center relative z-50 bg-[#FCFCFC] shadow-md px-4 lg:px-10 lg-h700:h-[11vh] xl-minh700:h-[9vh] xl-minh700:px-[5rem]">
+      <div className="pb-2">
         <Link to={"/"}>
           <img
-            className="h-[70px]  sm-h700:h-[60px] sm:h-[80px] lg-h700:h-[63px] md:h-[3.9rem] xl-minh700:h-[78px] md-h700:h-[3.7rem] md-lg-minh800:h-[5rem] lg-xl-minh800:h-[5rem] xl-h700:h-[60px] bsm-h600:h-[3.7rem]"
+            className="h-[70px] w-auto sm-h700:h-[60px] sm:h-[80px] lg-h700:h-[63px] md:h-[3.9rem] xl-minh700:h-[78px] md-h700:h-[3.7rem] md-lg-minh800:h-[5rem] lg-xl-minh800:h-[5rem] xl-h700:h-[60px] bsm-h600:h-[3.7rem]"
             src="../../assets/payzip.png"
             alt=""
           />

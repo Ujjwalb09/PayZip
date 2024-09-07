@@ -54,7 +54,7 @@ const UserDetails = () => {
   }, [query, isChecked]);
 
   return (
-    <div className="px-10 relative">
+    <div className="px-3 sm:px-8 md:px-10 2xl:px-20 relative">
       <div className="h-[9vh] flex items-center text-lg font-semibold mt-4 font-rubik tracking-wide gap-2">
         <div>Your Balance:</div>
         {!balance ? (
@@ -120,13 +120,13 @@ const UserDetails = () => {
       </div>
 
       {data.length > 0 && (query.length > 0 || isChecked) && (
-        <div className="flex flex-col gap-2 mt-4">
+        <div className="flex flex-col gap-2 mt-4 mb-5">
           {data.map(
             (data, index) =>
               data.username !== user.username && (
                 <div
                   key={index}
-                  className="p-3 flex justify-between border-b border-l shadow-md"
+                  className="p-2 flex justify-between border-b border-l shadow-md "
                 >
                   <div className="flex items-center gap-2">
                     <div className="bg-gray-300 rounded-full h-11 w-11 flex items-center justify-center">
@@ -147,7 +147,7 @@ const UserDetails = () => {
                       setOutletDetails(obj);
                       navigate("/dashboard/send");
                     }}
-                    className="bg-black flex items-center text-indigo-100 px-4 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:scale-105 duration-150"
+                    className="bg-black flex items-center text-indigo-100 px-2 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:scale-105 duration-150"
                   >
                     Send Money
                   </button>

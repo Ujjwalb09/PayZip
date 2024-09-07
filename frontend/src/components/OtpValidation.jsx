@@ -144,6 +144,8 @@ function OtpInputWithValidation({ numberOfDigits = 6 }) {
           {otp.map((digit, index) => (
             <input
               key={index}
+              type="number"
+              inputMode="numeric"
               minLength={1}
               value={digit}
               maxLength={1}

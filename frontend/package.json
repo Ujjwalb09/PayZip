@@ -15,6 +15,7 @@
     "axios": "^1.7.4",
     "emailjs-com": "^3.2.0",
     "framer-motion": "^11.3.31",
+    "lucide-react": "^0.439.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-floaterjs": "^1.0.6",

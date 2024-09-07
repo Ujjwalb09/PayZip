@@ -34,9 +34,9 @@ const Topnav = ({ user }) => {
     };
   }, []);
   return (
-    <div className="w-full h-[7vh] flex justify-between border-b border-gray-200 shadow-md items-center relative z-50 bg-white">
-      <div className="px-6 pb-1">
-        <img className="h-14" src="../../assets/payzip.png" alt="" />
+    <div className="w-full h-[11vh] md:h-[8vh] flex justify-between border-b border-gray-200 shadow-md items-center relative z-50 bg-white">
+      <div className="px-4 pb-2">
+        <img className="h-14 w-auto" src="../../assets/payzip.png" alt="" />
       </div>
       <div className="flex gap-4 px-10 text-center">
         <div className="flex items-center font-rubik text-lg">
@@ -75,22 +75,24 @@ const Topnav = ({ user }) => {
       {showLogout && user && (
         <div
           ref={logoutBtnContainer}
-          className="absolute right-3 top-[63px] bg-gray-200 h-[11rem] w-[13%] rounded-md shadow-lg text-wrap flex flex-col justify-between gap-3"
+          className="absolute right-1 top-[76px] bg-white h-[11rem] w-[50%] py-1 lg:py-2 lg:px-5 ring-1 ring-black ring-opacity-5 rounded-md shadow-lg text-wrap flex flex-col justify-between gap-3 xl:w-[25%] sm:w-[40%] md:w-[30%] lg:gap-0 2xl:w-[17%]"
         >
           <div className="p-2 font-merriweather">
-            <p className="text-gray-700 text-lg">
+            <p className="text-gray-700 text-lg lg:text-2xl font-semibold">
               {user.firstName} {user.lastName}
             </p>
-            <p className="text-[0.8rem] text-gray-700 mb-2">{user.username}</p>
+            <p className="text-[0.8rem] lg:text-[16px] text-gray-700 mb-2">
+              {user.username}
+            </p>
             <Link
               to={"/dashboard/edit"}
-              className="text-sm underline text-blue-600"
+              className="block py-1 text-sm lg:text-lg text-gray-700 hover:bg-gray-100 underline"
             >
               Update Profile
             </Link>
           </div>
 
-          <div className="flex items-center justify-center mb-1">
+          <div className="flex items-center mb-1 px-2">
             <button
               onClick={() => {
                 setLoading(true);
