@@ -68,33 +68,31 @@ To run the project locally, follow these steps:
 
    Create a `.env` file in the `server` directory and add the following:
 
-````plaintext
+```bash
 EMAIL_SERVICE=your_email_service
 EMAIL_USER=your_email_user
 EMAIL_PASS=your_email_password
 
 ```
 
-
-
 5. **Configure JWT secret:**
 
-  ``` cd config.js
-   module.exports = {
-  JWT_SECRET: "YOUR_JWT_SECRET",
+```bash
+cd config.js
+ module.exports = {
+JWT_SECRET: "YOUR_JWT_SECRET",
 };
-```
 
+```
 
 ### Run the Application
 
- **Start the server and client in development mode:**
+**Start the server and client in development mode:**
 
-   ```bash
-   # In the server directory
-   npm start index.js
+```bash
+# In the server directory
+npm start index.js
 
-   # In the client directory
-   npm run dev
-   ```
-````
+# In the client directory
+npm run dev
+```
