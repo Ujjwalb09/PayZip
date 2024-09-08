@@ -79,6 +79,7 @@ EMAIL_PASS=your_email_password
 
 ```bash
 cd config.js
+
  module.exports = {
 JWT_SECRET: "YOUR_JWT_SECRET",
 };
