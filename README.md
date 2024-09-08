@@ -73,12 +73,17 @@ EMAIL_SERVICE=your_email_service
 EMAIL_USER=your_email_user
 EMAIL_PASS=your_email_password
 
+```
+
+
+
 5. **Configure JWT secret:**
 
-   cd config.js
+  ``` cd config.js
    module.exports = {
   JWT_SECRET: "YOUR_JWT_SECRET",
 };
+```
 
 
 ### Run the Application
