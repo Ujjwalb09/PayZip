@@ -22,32 +22,31 @@ const Signin = () => {
   const signIn = (event) => {
     event.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      userAxios
-        .post("/signin", {
-          username: email,
-          password,
-        })
-        .then((response) => {
-          localStorage.setItem(email, response.data.token);
-          dispatch(
-            loadUser({
-              firstName: response.data.user.firstName,
-              lastName: response.data.user.lastName,
-              username: response.data.user.username,
-            })
-          );
-          toast.success(response.data.message);
-          navigate("/dashboard");
-          setLoading(false);
-        })
-        .catch((error) => {
-          error.response
-            ? toast.error(error.response.data.message)
-            : console.log(error);
-          setLoading(false);
-        });
-    }, 1000);
+
+    userAxios
+      .post("/signin", {
+        username: email,
+        password,
+      })
+      .then((response) => {
+        localStorage.setItem(email, response.data.token);
+        dispatch(
+          loadUser({
+            firstName: response.data.user.firstName,
+            lastName: response.data.user.lastName,
+            username: response.data.user.username,
+          })
+        );
+        toast.success(response.data.message);
+        navigate("/dashboard");
+        setLoading(false);
+      })
+      .catch((error) => {
+        error.response
+          ? toast.error(error.response.data.message)
+          : console.log(error);
+        setLoading(false);
+      });
   };
 
   const leftPanelVariants = {
