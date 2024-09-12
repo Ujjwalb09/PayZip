@@ -7,6 +7,7 @@ import OtpInputWithValidation from "./components/OtpValidation";
 import LandingPage from "./components/LandingPage";
 import Edit from "./components/Edit";
 import ContactUs from "./components/ContactUs";
+import { Analytics } from "@vercel/analytics/react";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         </Route>
         <Route path="/contactUs" element={<ContactUs />} />
       </Routes>
+      <Analytics />
     </div>
   );
 }

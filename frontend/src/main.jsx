@@ -8,7 +8,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { store } from "./store/store.jsx";
 import { Provider } from "react-redux";
-import { Analytics } from "@vercel/analytics/react";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
@@ -26,7 +25,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         pauseOnHover
         theme="light"
       />
-      <Analytics />
     </BrowserRouter>
   </Provider>
 );
