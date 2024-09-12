@@ -30,11 +30,12 @@ const Signin = () => {
       })
       .then((response) => {
         localStorage.setItem(email, response.data.token);
+        console.log(response);
         dispatch(
           loadUser({
-            firstName: response.data.user.firstName,
-            lastName: response.data.user.lastName,
-            username: response.data.user.username,
+            firstName: response.data.userData.firstName,
+            lastName: response.data.userData.lastName,
+            username: response.data.userData.username,
           })
         );
         toast.success(response.data.message);
