@@ -10,17 +10,6 @@ const SendMoney = () => {
   const [transferSuccessful, setTransferSuccessful] = useState(false);
   const [timer, setTimer] = useState(4);
   const [loading, setLoading] = useState(false);
-  const [topPosition, setTopPosition] = useState(0);
-
-  useEffect(() => {
-    setTopPosition(window.scrollY);
-
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, []);
 
   const transfer = async () => {
     if (transferAmount < 1) {
@@ -95,10 +84,7 @@ const SendMoney = () => {
 
   return (
     transferDetail && (
-      <div
-        className="fixed z-[100] left-0 w-screen h-screen flex flex-col items-center justify-center bg-[rgba(0,0,0,.8)]"
-        style={{ top: `${topPosition}px` }}
-      >
+      <div className="fixed z-[100] top-0 left-0 w-screen h-screen flex flex-col items-center justify-center bg-[rgba(0,0,0,.8)]">
         <Link
           onClick={() => navigate(-1)}
           className="ri-close-line mr-5 absolute text-xl text-white right-5 top-5 hover:scale-110"
