@@ -1,21 +1,30 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
-import { useState } from "react";
-import axios from "axios";
-import { toast, Flip } from "react-toastify";
+import { toast } from "react-toastify";
 import { accountAxios } from "../utils/axios";
 
 const SendMoney = () => {
   const navigate = useNavigate();
   const [transferAmount, setTransferAmount] = useState(null);
   const transferDetail = useOutletContext();
-  const [transferSuccesful, setTransferSuccessful] = useState(false);
+  const [transferSuccessful, setTransferSuccessful] = useState(false);
   const [timer, setTimer] = useState(4);
   const [loading, setLoading] = useState(false);
+  const [topPosition, setTopPosition] = useState(0);
+
+  useEffect(() => {
+    setTopPosition(window.scrollY);
+
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, []);
 
   const transfer = async () => {
     if (transferAmount < 1) {
-      toast.info("Payment must be atleast ₹1", {
+      toast.info("Payment must be at least ₹1", {
         position: "bottom-center",
         autoClose: 5000,
         hideProgressBar: true,
@@ -24,7 +33,6 @@ const SendMoney = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-        // transition: Flip,
       });
       return;
     }
@@ -45,7 +53,6 @@ const SendMoney = () => {
             },
           }
         );
-        // toast.success("Transfer Successful");
         setTransferSuccessful(true);
         setLoading(false);
       } catch (error) {
@@ -60,7 +67,7 @@ const SendMoney = () => {
   useEffect(() => {
     let interval;
 
-    if (transferSuccesful) {
+    if (transferSuccessful) {
       setTimer(4);
 
       interval = setInterval(() => {
@@ -78,19 +85,28 @@ const SendMoney = () => {
         setTransferSuccessful(false);
       }, 4000);
     }
-  }, [transferSuccesful]);
+
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, [transferSuccessful]);
 
   return (
     transferDetail && (
-      <div className="bg-[rgba(0,0,0,.8)] absolute z-[100] top-[-6rem] left-0 w-screen h-screen flex flex-col items-center justify-center 2xl:top-[-5.4rem]">
+      <div
+        className="fixed z-[100] left-0 w-screen h-screen flex flex-col items-center justify-center bg-[rgba(0,0,0,.8)]"
+        style={{ top: `${topPosition}px` }}
+      >
         <Link
           onClick={() => navigate(-1)}
-          className="ri-close-line mr-5 absolute text-xl text-white left-[70%] top-[12%] hover:scale-110"
+          className="ri-close-line mr-5 absolute text-xl text-white right-5 top-5 hover:scale-110"
         >
           Close
-        </Link>{" "}
-        <div className="bg-white w-[20rem] h-[21rem] 2xl:w-[30rem] 2xl:h-[30rem] rounded-lg">
-          {!transferSuccesful ? (
+        </Link>
+        <div className="bg-white w-[90%] max-w-[20rem] h-[21rem] 2xl:max-w-[30rem] 2xl:h-[30rem] rounded-lg overflow-y-auto">
+          {!transferSuccessful ? (
             <div className="flex flex-col gap-[3rem]">
               <div className="flex flex-col items-center justify-center h-[6rem] text-3xl 2xl:h-[10rem] 2xl:text-5xl font-bold pt-[4rem] font-quicksand mb-0">
                 <h1>Send Money</h1>
@@ -106,10 +122,10 @@ const SendMoney = () => {
                   <span className="flex items-center justify-center w-11 h-11 rounded-full bg-[#21C55D] text-xl font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-400 font-quicksand 2xl:text-2xl">
                     {transferDetail.payeeFirstName.split("")[0]}
                   </span>
-                  <h1 className="text-[1.40rem] 2xl:text-[2rem] font-bold  font-quicksand">
+                  <h3 className="text-[1.20rem] 2xl:text-[2rem] font-bold font-quicksand">
                     {transferDetail.payeeFirstName}{" "}
                     {transferDetail.payeeLastName}
-                  </h1>
+                  </h3>
                 </div>
                 <div className="flex flex-col gap-1 2xl:gap-2">
                   <h3 className="">Amount (in Rs)</h3>
@@ -129,7 +145,7 @@ const SendMoney = () => {
                         className="w-full h-6 animate-spin ease-linear mb-1"
                         src="../assets/loading.svg"
                         alt="Loading icon"
-                      ></img>
+                      />
                     ) : (
                       "Initiate transfer"
                     )}
@@ -139,7 +155,7 @@ const SendMoney = () => {
             </div>
           ) : (
             <div className="w-full h-full flex flex-col items-center justify-center gap-2">
-              <div className=" flex flex-col items-center justify-center gap-[3rem]">
+              <div className="flex flex-col items-center justify-center gap-[3rem]">
                 <img className="h-[9rem]" src="../assets/success.gif" alt="" />
                 <h1 className="font-bold text-xl font-quicksand">
                   Transfer Successful
