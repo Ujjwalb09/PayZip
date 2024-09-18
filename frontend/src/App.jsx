@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Signup from "./components/Signup";
 import Signin from "./components/Signin";
 import Dashboard from "./components/Dashboard";
-import SendMoney from "./components/SendMoney";
+import SendMoney from "./components/templates/SendMoney";
 import OtpInputWithValidation from "./components/OtpValidation";
 import LandingPage from "./components/LandingPage";
 import Edit from "./components/Edit";

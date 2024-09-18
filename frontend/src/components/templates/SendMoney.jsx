@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { toast } from "react-toastify";
-import { accountAxios } from "../utils/axios";
+import { accountAxios } from "../../utils/axios";
 
 const SendMoney = () => {
   const navigate = useNavigate();

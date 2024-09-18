@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 export default function UserDetails() {
   const [balance, setBalance] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showBalance, setShowBalance] = useState(true);
+  const [showBalance, setShowBalance] = useState(false);
   const [query, setQuery] = useState("");
   const [isAllUsers, setIsAllUsers] = useState(false);
   const [users, setUsers] = useState([]);
@@ -17,6 +17,7 @@ export default function UserDetails() {
 
   const user = useSelector((state) => state.user.info);
   const navigate = useNavigate();
+  console.log(loading);
 
   const getBalance = async () => {
     setLoading(true);
@@ -75,7 +76,7 @@ export default function UserDetails() {
               disabled={!user || loading}
               className="text-blue-500 font-semibold"
             >
-              {loading ? "Loading..." : "Check balance"}
+              {loading ? "Fetching balance..." : "Check balance"}
             </button>
           )}
         </div>
@@ -118,7 +119,7 @@ export default function UserDetails() {
                 data.username !== user.username && (
                   <div
                     key={data._id}
-                    className="flex flex-col md:flex-row md:justify-between py-3 border-b border-gray-200 last:border-b-0"
+                    className="flex flex-col md:flex-row md:justify-between py-3 border-b border-gray-200 last:border-b-0 gap-2"
                   >
                     <div className="flex items-center space-x-3 flex-grow mr-2 mb-2 md:mb-0">
                       <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold text-xl flex-shrink-0">
@@ -146,7 +147,7 @@ export default function UserDetails() {
                           setOutletDetails(obj);
                           navigate("/dashboard/send");
                         }}
-                        className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 text-nowrap font-barlow font-semibold"
+                        className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 text-nowrap font-barlow font-semibold w-full"
                       >
                         Send Money
                       </button>

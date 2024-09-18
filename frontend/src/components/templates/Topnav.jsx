@@ -81,7 +81,15 @@ export default function Topnav({ user }) {
             }}
             className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
           >
-            {loading ? "Loading..." : "Sign In"}
+            {loading ? (
+              <img
+                className="w-full h-6 animate-spin ease-linear"
+                src="../assets/loading.svg"
+                alt="Loading icon"
+              ></img>
+            ) : (
+              "Sign In"
+            )}
           </button>
         )}
       </div>
