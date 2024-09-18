@@ -7,14 +7,16 @@ const port = process.env.PORT || 8080;
 
 app.use(express.json());
 
-app.use(
-  cors({
-    origin: "https://payzip.vercel.app", // Replace with your frontend URL
-    methods: ["GET", "POST", "PUT", "DELETE"], // Define allowed HTTP methods
-    allowedHeaders: ["Content-Type", "Authorization"], // Define allowed headers
-    credentials: true, // Enable this if requests include credentials like cookies
-  })
-);
+const corsOptions = {
+  origin: "https://payzip.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+
+app.options("*", cors(corsOptions));
 
 app.use("/api/v1", mainRouter);
 
