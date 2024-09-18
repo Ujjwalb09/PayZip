@@ -9,6 +9,8 @@ const zod = require("zod");
 const passSchema = zod.string().min(6);
 const { OTP } = require("../db/db");
 const { Account } = require("../db/db");
+const app = express();
+app.use(cors());
 
 //user Signup
 router.post("/signup", async (req, res) => {
