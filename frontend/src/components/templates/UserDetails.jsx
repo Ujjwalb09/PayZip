@@ -1,164 +1,163 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import userAxios, { accountAxios } from "../../utils/axios";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Eye, EyeOff, Search, IndianRupee } from "lucide-react";
+import userAxios, { accountAxios } from "../../utils/axios";
+import { motion } from "framer-motion";
 
-const UserDetails = () => {
-  const [data, setData] = useState("");
-
-  const user = useSelector((state) => state.user.info);
+export default function UserDetails() {
   const [balance, setBalance] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showTooltip, setShowTooltip] = useState(false);
+  const [showBalance, setShowBalance] = useState(true);
   const [query, setQuery] = useState("");
-  const [isChecked, setIsChecked] = useState(false);
+  const [isAllUsers, setIsAllUsers] = useState(false);
+  const [users, setUsers] = useState([]);
   const [outletDetails, setOutletDetails] = useState(null);
+
+  const user = useSelector((state) => state.user.info);
   const navigate = useNavigate();
+
   const getBalance = async () => {
     setLoading(true);
     const token = localStorage.getItem(user.username);
 
-    setTimeout(async () => {
-      try {
-        const response = await accountAxios.get("/balance", {
-          headers: {
-            authorization: token,
-          },
-        });
-
-        setBalance(response.data.balance);
-        setLoading(false);
-      } catch (error) {
-        toast.error("Error! Please try again after sometime");
-      }
-    }, 1000);
+    try {
+      const response = await accountAxios.get("/balance", {
+        headers: { authorization: token },
+      });
+      setBalance(response.data.balance);
+      setShowBalance(true);
+    } catch (error) {
+      toast.error("Error! Please try again after sometime");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const getUsers = async () => {
     try {
       const response = await userAxios.get("/bulk", {
-        params: {
-          filter: query,
-        },
+        params: { filter: query },
       });
-      console.log(response);
-      setData(response.data.users);
-    } catch (error) {}
+      setUsers(response.data.users);
+    } catch (error) {
+      toast.error("Failed to fetch users");
+    }
   };
 
   useEffect(() => {
-    query && getUsers();
-    isChecked && getUsers();
-  }, [query, isChecked]);
+    if (query || isAllUsers) {
+      getUsers();
+    }
+  }, [query, isAllUsers]);
 
   return (
-    <div className="px-3 sm:px-8 md:px-10 2xl:px-20 relative">
-      <div className="h-[9vh] flex items-center text-lg font-semibold mt-4 font-rubik tracking-wide gap-2">
-        <div>Your Balance:</div>
-        {!balance ? (
-          <button
-            onClick={getBalance}
+    <div className="max-w-md mx-auto px-4 py-6">
+      <div className="bg-white shadow rounded-lg p-4 mb-6">
+        <h2 className="text-2xl font-bold mb-2 font-poppins">Your Balance</h2>
+        <div className="flex items-center justify-between">
+          {showBalance ? (
+            <>
+              <span className="text-3xl font-bold font-barlow flex items-center gap-1">
+                <IndianRupee className="mt-1" size={21} /> {balance}
+              </span>
+              <button
+                onClick={() => setShowBalance(false)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <EyeOff size={24} />
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={getBalance}
+              disabled={!user || loading}
+              className="text-blue-500 font-semibold"
+            >
+              {loading ? "Loading..." : "Check balance"}
+            </button>
+          )}
+        </div>
+      </div>
+
+      <div className="bg-white shadow rounded-lg p-4">
+        <h2 className="text-2xl font-bold mb-4 font-poppins">Users</h2>
+        <div className="mb-4">
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search Users..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <Search
+              className="absolute left-3 top-2.5 text-gray-400"
+              size={20}
+            />
+          </div>
+        </div>
+        <div className="flex items-center mb-4">
+          <input
+            type="checkbox"
+            id="allUsers"
+            checked={isAllUsers}
+            onChange={(e) => setIsAllUsers(e.target.checked)}
             disabled={!user}
-            className={`text-sm text-blue-500 underline pt-1 ${
-              !user && "cursor-not-allowed"
-            }`}
-          >
-            {loading ? (
-              <img
-                className="w-full h-5 animate-spin ease-linear mb-1"
-                src="../assets/blackLoading.png"
-                alt="Loading icon"
-              ></img>
-            ) : (
-              "Check balance"
-            )}
-          </button>
-        ) : (
-          <div className="pt-[1px] flex gap-2">
-            ₹ {balance}
-            {balance && (
-              <>
-                <i
-                  onClick={() => {
-                    setShowTooltip(false);
-                    setBalance(false);
-                  }}
-                  onMouseEnter={() => setShowTooltip(true)}
-                  onMouseLeave={() => setShowTooltip(false)}
-                  className="ri-eye-close-line cursor-pointer"
-                ></i>
-                {showTooltip && (
-                  <span className="absolute left-60 top-7 transform -translate-y-full bg-gray-600 text-white text-xs rounded-md py-1 px-1 whitespace-nowrap transition duration-1000 delay-1000 ease-in-out font-light tracking-normal">
-                    Hide Balance
-                  </span>
-                )}
-              </>
+            className="mr-2"
+          />
+          <label htmlFor="allUsers" className="text-sm text-gray-600">
+            All users
+          </label>
+        </div>
+        {users.length > 0 && (query.length > 0 || isAllUsers) && (
+          <div className="space-y-3">
+            {users.map(
+              (data) =>
+                data.username !== user.username && (
+                  <div
+                    key={data._id}
+                    className="flex flex-col md:flex-row md:justify-between py-3 border-b border-gray-200 last:border-b-0"
+                  >
+                    <div className="flex items-center space-x-3 flex-grow mr-2 mb-2 md:mb-0">
+                      <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold text-xl flex-shrink-0">
+                        {data.firstName[0]}
+                      </div>
+                      <div className="overflow-hidden">
+                        <p className="font-medium truncate font-barlow">{`${data.firstName} ${data.lastName}`}</p>
+                        <p className="text-xs text-gray-500 truncate">
+                          {data.username}
+                        </p>
+                      </div>
+                    </div>
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <button
+                        onClick={() => {
+                          const obj = {
+                            payeeFirstName: data.firstName,
+                            payeeLastName: data.lastName,
+                            payeeId: data._id,
+                            payorUsername: user.username,
+                          };
+                          setOutletDetails(obj);
+                          navigate("/dashboard/send");
+                        }}
+                        className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 text-nowrap font-barlow font-semibold"
+                      >
+                        Send Money
+                      </button>
+                    </motion.div>
+                  </div>
+                )
             )}
           </div>
         )}
       </div>
-
-      <div>
-        <div className="font-semibold">Users</div>
-        <input
-          onChange={(e) => setQuery(e.target.value)}
-          className="w-full mt-2 border px-2 py-1 rounded-lg"
-          type="text"
-          placeholder="Search Users..."
-        />
-      </div>
-      <div className="text-sm flex gap-1 items-center mt-2">
-        <input
-          disabled={!user}
-          onClick={(e) => setIsChecked(e.target.checked)}
-          className=""
-          type="checkbox"
-        />
-        <div className="pt-[2px]">All users</div>
-      </div>
-
-      {data.length > 0 && (query.length > 0 || isChecked) && (
-        <div className="flex flex-col gap-2 mt-4 mb-5">
-          {data.map(
-            (data, index) =>
-              data.username !== user.username && (
-                <div
-                  key={index}
-                  className="p-2 flex justify-between border-b border-l shadow-md "
-                >
-                  <div className="flex items-center gap-2">
-                    <div className="bg-gray-300 rounded-full h-11 w-11 flex items-center justify-center">
-                      {data.firstName.split("")[0]}
-                    </div>
-                    <div>
-                      {data.firstName} {data.lastName}
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => {
-                      const obj = {
-                        payeeFirstName: data.firstName,
-                        payeeLastName: data.lastName,
-                        payeeId: data._id,
-                        payorUsername: user.username,
-                      };
-                      setOutletDetails(obj);
-                      navigate("/dashboard/send");
-                    }}
-                    className="bg-black flex items-center text-indigo-100 px-2 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:scale-105 duration-150"
-                  >
-                    Send Money
-                  </button>
-                </div>
-              )
-          )}
-        </div>
-      )}
       <Outlet context={outletDetails} />
     </div>
   );
-};
-
-export default UserDetails;
+}

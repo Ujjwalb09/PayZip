@@ -1,122 +1,90 @@
-import React, { useEffect, useState } from "react";
-import { useRef } from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Menu, User, ChevronDown } from "lucide-react";
 
-const Topnav = ({ user }) => {
-  const [showLogout, setShowLogout] = useState(false);
+export default function Topnav({ user }) {
+  const [showDropdown, setShowDropdown] = useState(false);
   const [loading, setLoading] = useState(false);
-  const buttonContainerRef = useRef();
-  const logoutBtnContainer = useRef();
+  const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
-  const color = () => {
-    return `rgba(${(Math.random() * 255).toFixed()}, ${(
-      Math.random() * 255
-    ).toFixed()}, ${(Math.random() * 255).toFixed()}, 0.4)`;
-  };
-
-  const handleClickOutside = (e) => {
-    if (
-      buttonContainerRef.current &&
-      logoutBtnContainer.current &&
-      !buttonContainerRef.current.contains(e.target) &&
-      !logoutBtnContainer.current.contains(e.target)
-    ) {
-      setShowLogout(false);
-    }
-  };
-
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
 
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const handleLogout = () => {
+    setLoading(true);
+    setTimeout(() => {
+      navigate("/signin");
+    }, 1000);
+  };
+
   return (
-    <div className="w-full h-[11vh] md:h-[8vh] flex justify-between border-b border-gray-200 shadow-md items-center relative z-50 bg-white">
-      <div className="px-4 pb-2">
-        <img className="h-14 w-auto" src="../../assets/payzip.png" alt="" />
+    <nav className="w-full h-16 flex justify-between items-center px-4 md:px-6 bg-white border-b border-gray-200 shadow-sm">
+      <div className="flex items-center">
+        <img
+          src="../../assets/payzip.png"
+          alt="PayZip Logo"
+          className="h-14 w-auto"
+        />
       </div>
-      <div className="flex gap-4 px-10 text-center">
-        <div className="flex items-center font-rubik text-lg">
-          {user && "Hello"}
-        </div>
+      <div className="flex items-center space-x-4">
         {user ? (
-          <button
-            ref={buttonContainerRef}
-            onClick={() => setShowLogout((prev) => !prev)}
-            className="flex items-center justify-center w-12 h-12 rounded-full bg-gray-200 text-xl font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-400 pt-1"
-          >
-            {user.firstName.split("")[0]}
-          </button>
+          <div className="relative" ref={dropdownRef}>
+            <button
+              onClick={() => setShowDropdown(!showDropdown)}
+              className="flex items-center space-x-2 text-gray-700 hover:text-gray-900 focus:outline-none"
+            >
+              <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
+                <User size={20} />
+              </div>
+              <span className="hidden md:inline-block font-medium">
+                {user.firstName}
+              </span>
+              <ChevronDown size={20} />
+            </button>
+            {showDropdown && (
+              <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
+                <div className="px-4 py-2 border-b border-gray-100">
+                  <p className="text-sm font-medium text-gray-900">{`${user.firstName} ${user.lastName}`}</p>
+                  <p className="text-xs text-gray-500">{user.username}</p>
+                </div>
+                <Link
+                  to="/dashboard/edit"
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  Update Profile
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  {loading ? "Logging out..." : "Logout"}
+                </button>
+              </div>
+            )}
+          </div>
         ) : (
           <button
             onClick={() => {
               setLoading(true);
-              setTimeout(() => {
-                navigate("/signin");
-              }, 2000);
+              setTimeout(() => navigate("/signin"), 1000);
             }}
-            className="bg-black px-4 py-2 rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:scale-105 shadow-md text-indigo-100 duration-150 font-raleway text-lg"
+            className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
           >
-            {loading ? (
-              <img
-                className="w-full h-6 animate-spin ease-linear"
-                src="../assets/loading.svg"
-                alt="Loading icon"
-              ></img>
-            ) : (
-              "Signin"
-            )}
+            {loading ? "Loading..." : "Sign In"}
           </button>
         )}
       </div>
-      {showLogout && user && (
-        <div
-          ref={logoutBtnContainer}
-          className="absolute right-1 top-[76px] bg-white h-[11rem] w-[50%] py-1 lg:py-2 lg:px-5 ring-1 ring-black ring-opacity-5 rounded-md shadow-lg text-wrap flex flex-col justify-between gap-3 xl:w-[25%] sm:w-[40%] md:w-[30%] lg:gap-0 2xl:w-[17%]"
-        >
-          <div className="p-2 font-merriweather">
-            <p className="text-gray-700 text-lg lg:text-2xl font-semibold">
-              {user.firstName} {user.lastName}
-            </p>
-            <p className="text-[0.8rem] lg:text-[16px] text-gray-700 mb-2">
-              {user.username}
-            </p>
-            <Link
-              to={"/dashboard/edit"}
-              className="block py-1 text-sm lg:text-lg text-gray-700 hover:bg-gray-100 underline"
-            >
-              Update Profile
-            </Link>
-          </div>
-
-          <div className="flex items-center mb-1 px-2">
-            <button
-              onClick={() => {
-                setLoading(true);
-                setTimeout(() => {
-                  navigate("/signin");
-                }, 1000);
-              }}
-              className="bg-black px-4 py-2 rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 hover:scale-105 shadow-md text-indigo-100 duration-150 font-raleway text-lg"
-            >
-              {loading ? (
-                <img
-                  className="w-full h-6 animate-spin ease-linear"
-                  src="../assets/loading.svg"
-                  alt="Loading icon"
-                ></img>
-              ) : (
-                "Logout"
-              )}
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
+    </nav>
   );
-};
-
-export default Topnav;
+}

@@ -20,6 +20,7 @@ export default {
         caveat: ["Caveat", "cursive"],
         kalam: ["Kalam", "cursive"],
         poppins: ["Poppins", "sans-serif"],
+        barlow: ["Barlow", "sans-serif"],
       },
       screens: {
         belowSm: { raw: "(max-width: 640px)" },
