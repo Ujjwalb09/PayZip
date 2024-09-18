@@ -1,6 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, User, ChevronDown } from "lucide-react";
+import { OctagonAlert } from "lucide-react";
+import { LogOut } from "lucide-react";
+import { UserPen } from "lucide-react";
 
 export default function Topnav({ user }) {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -25,6 +28,12 @@ export default function Topnav({ user }) {
     setLoading(true);
     setTimeout(() => {
       navigate("/signin");
+    }, 1000);
+  };
+
+  const handleDeleteAccount = () => {
+    setTimeout(() => {
+      navigate("/dashboard/delete-account");
     }, 1000);
   };
 
@@ -60,15 +69,30 @@ export default function Topnav({ user }) {
                 </div>
                 <Link
                   to="/dashboard/edit"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
                 >
                   Update Profile
+                  <UserPen className="text-blue-500 mb-[2px]" size={16} />
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
                 >
-                  {loading ? "Logging out..." : "Logout"}
+                  {loading ? (
+                    "Logging out..."
+                  ) : (
+                    <>
+                      Logout
+                      <LogOut className="text-red-500 mb-[2px]" size={16} />
+                    </>
+                  )}
+                </button>
+                <button
+                  onClick={handleDeleteAccount}
+                  className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                >
+                  Delete Account{" "}
+                  <OctagonAlert className="text-red-500 mb-[2px]" size={16} />
                 </button>
               </div>
             )}

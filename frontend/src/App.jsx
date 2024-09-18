@@ -8,7 +8,7 @@ import LandingPage from "./components/LandingPage";
 import Edit from "./components/Edit";
 import ContactUs from "./components/ContactUs";
 import { Analytics } from "@vercel/analytics/react";
-
+import DeleteAccount from "./components/templates/DeleteAccount";
 function App() {
   return (
     <div className="w-screen h-screen flex">
@@ -21,6 +21,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="/dashboard/send" element={<SendMoney />} />
           <Route path="/dashboard/edit" element={<Edit />} />
+          <Route path="/dashboard/delete-account" element={<DeleteAccount />} />
         </Route>
         <Route path="/contactUs" element={<ContactUs />} />
       </Routes>

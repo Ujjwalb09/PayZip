@@ -8,6 +8,7 @@ const authMiddleware = require("../middlewares/middleware");
 const zod = require("zod");
 const passSchema = zod.string().min(6);
 const { OTP } = require("../db/db");
+const { Account } = require("../db/db");
 
 //user Signup
 router.post("/signup", async (req, res) => {
@@ -150,6 +151,22 @@ router.get("/bulk", async (req, res) => {
   }));
 
   res.status(202).json({ users });
+});
+
+router.delete("/delete", authMiddleware, async (req, res) => {
+  const userId = req.userId;
+
+  const user = await User.findById({ _id: userId });
+
+  if (!user)
+    return res.status(400).json({
+      message: "User not found",
+    });
+
+  await user.deleteOne();
+  await Account.deleteOne({ userId });
+
+  res.status(200).json({ message: "User deleted successfully" });
 });
 
 module.exports = router;
