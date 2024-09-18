@@ -45,7 +45,7 @@ const DeleteAccount = () => {
         >
           <X className="h-6 w-6" />
         </button>
-        <div className="px-6 py-4">
+        <div className="px-6 py-4 flex flex-col items-center justify-center">
           <h2 className="text-center text-xl md:text-2xl font-bold text-gray-800 mb-4 text-nowrap font-poppins">
             We are sorry to see you go
           </h2>
@@ -59,7 +59,7 @@ const DeleteAccount = () => {
           <p className="text-center text-gray-600 mb-2">
             To confirm account deletion, please type:
           </p>
-          <p className="text-center font-mono bg-gray-100 p-2 rounded mb-4">
+          <p className="text-center font-mono bg-gray-100 p-2 rounded mb-4 w-full">
             delete-my-account
           </p>
           <input
